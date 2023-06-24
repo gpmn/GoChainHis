@@ -1,7 +1,7 @@
 # GoChainHis
 ChainHis CLI utils
 
-Note, "go run ." could be replaced with compiled artifact such as GoChainHis in following examples.
+cd this project folder, then type "go run ." to execute.
 
 # escrow deposit
 - go run . escrow deposit 0.1
