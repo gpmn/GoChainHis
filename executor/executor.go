@@ -354,6 +354,7 @@ func (exe *Executor) HistoryDump(daySlotStr string, offset int) (err error) {
 		util.ToDecimal(maPrice, 18).String(),
 		util.ColorSuffix)
 	fmt.Printf("    VoteEndTm       : %s (As Local Time)\n", time.Unix(int64(record.VoteEndTm), 0).Local().Format(util.FavoredTimeFormat))
+	fmt.Printf("    VoterCnt        : %d\n", record.VoterCnt)
 	fmt.Printf("    VoteSum         : %s\n", record.VoteSum.String())
 	fmt.Printf("    WeightedVoteSum : %s\n", record.WeightedVoteSum.String())
 	fmt.Printf("    Status          : %s\n", statusDesc)
@@ -604,8 +605,17 @@ func (exe *Executor) HistoryResolve(daySlotStr string) (err error) {
 		return err
 	}
 	slot = uint64(tm.Unix())
+	record, err := exe.history.HistoryMap(&bind.CallOpts{}, slot)
+	if nil != err {
+		log.Printf("HistoryResolve - HistoryMap for %s failed : %s", daySlotStr, err.Error())
+		return err
+	}
+	if record.Status != 0 { // must be in _HistoryStatusPrepare=0 status
+		log.Printf("HistoryResolve - HistoryMap for %s status is :%d, invalid", daySlotStr, record.Status)
+		return errors.New("bad record status")
+	}
 
-	hint := fmt.Sprintf("This will settle ops rewards for %+v. Are Your Sure?(y/N)\n", daySlotStr)
+	hint := fmt.Sprintf("This will resolve for %+v. Are Your Sure?(y/N)\n", daySlotStr)
 	if !CheckAck(hint, 3) {
 		log.Printf("HistoryResolve - canceled by user")
 		return errors.New("canceled by user")
@@ -633,5 +643,55 @@ func (exe *Executor) HistoryResolve(daySlotStr string) (err error) {
 		return errors.New("failed status")
 	}
 	log.Printf("HistoryResolve - Resolve for %s successfully, tx hash : %s", daySlotStr, tx.Hash())
+	return nil
+}
+
+func (exe *Executor) HistoryMintAndAuction(daySlotStr string, festivals []string) (err error) {
+	var slot uint64
+	tm, err := DaySlotFromStr(daySlotStr, 0)
+	if nil != err {
+		log.Printf("HistoryMintAndAuction - bad dayslot '%s', err:%s", daySlotStr, err.Error())
+		return err
+	}
+	slot = uint64(tm.Unix())
+
+	record, err := exe.history.HistoryMap(&bind.CallOpts{}, slot)
+	if nil != err {
+		log.Printf("HistoryMintAndAuction - HistoryMap for %s failed : %s", daySlotStr, err.Error())
+		return err
+	}
+	if record.Status != 1 { // must be in _HistoryStatusSolved=1 status
+		log.Printf("HistoryMintAndAuction - HistoryMap for %s status is :%d, invalid", daySlotStr, record.Status)
+		return errors.New("bad record status")
+	}
+
+	hint := fmt.Sprintf("This will Mint and Auction for %+v, with Festivals:%+v. Are Your Sure?(y/N)\n", daySlotStr, festivals)
+	if !CheckAck(hint, 3) {
+		log.Printf("HistoryMintAndAuction - canceled by user")
+		return errors.New("canceled by user")
+	}
+	opts := &bind.TransactOpts{
+		From:      exe.myAddr,
+		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasLimit:  GAS_LIMIT,
+		Signer:    exe.signer,
+	}
+
+	tx, err := exe.history.MintAndAuction(opts, slot, festivals)
+	if nil != err {
+		log.Printf("HistoryMintAndAuction - MintAndAuction failed, err:%s", err.Error())
+		return err
+	}
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("HistoryMintAndAuction - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
+
+	if receipt.Status != 0 {
+		log.Printf("HistoryMintAndAuction - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
+	}
+	log.Printf("HistoryMintAndAuction - MintAndAuction for %s successfully, tx hash : %s", daySlotStr, tx.Hash())
 	return nil
 }

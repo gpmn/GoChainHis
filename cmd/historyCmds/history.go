@@ -10,7 +10,8 @@ import (
 var argDaySlots []string
 var argFromSlots []string
 var argPrefers []int
-var dumpCnt int
+var argFestivals []string
+var argDumpCnt int
 
 // historyCmd represents the history command
 var HistoryCmd = &cobra.Command{
@@ -34,6 +35,7 @@ func init() {
 	HistoryCmd.AddCommand(SettleCardCmd)
 	HistoryCmd.AddCommand(SettleOpsCmd)
 	HistoryCmd.AddCommand(ResolveCmd)
+	HistoryCmd.AddCommand(MintAndAucCmd)
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
@@ -45,9 +47,8 @@ func init() {
 	// historyCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 	HistoryCmd.PersistentFlags().StringSliceVarP(&argDaySlots, "dayslot", "d", nil, "the day to be displayed, can be unix sec of the day, or string of '2023-08-08'")
-
 	VoteCmd.Flags().IntSliceVarP(&argPrefers, "prefers", "p", []int{}, "prefered big news index, must three items, e.a. : 0,1,2")
-
-	DumpCmd.Flags().IntVarP(&dumpCnt, "count", "n", 1, "dump continuos count since specified daySlot.")
+	DumpCmd.Flags().IntVarP(&argDumpCnt, "count", "n", 1, "dump continuos count since specified daySlot.")
 	SettleCardCmd.Flags().StringSliceVarP(&argFromSlots, "fromSlots", "f", nil, "settle rewards from the slots of cards.")
+	MintAndAucCmd.Flags().StringSliceVarP(&argFestivals, "festivals", "e", nil, "Mint NFT and issue auction, with specified festivals")
 }

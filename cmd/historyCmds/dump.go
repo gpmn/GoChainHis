@@ -27,7 +27,7 @@ this command will dump 5 day's details since 2023-05-01 to 2023-05-05, and 2023-
 			os.Exit(1)
 		}
 		for idx := range argDaySlots {
-			for offset := 0; offset < dumpCnt; offset++ {
+			for offset := 0; offset < argDumpCnt; offset++ {
 				executor.GetExecutor().HistoryDump(argDaySlots[idx], offset)
 			}
 		}
