@@ -1,0 +1,9 @@
+{
+    "MyAddr":"0xXXXXXXXXXXXXXXXXXX",
+    "MyPrivKey":"0xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "Provider":"https://arb1.arbitrum.io/rpc",
+    "ChainID":42161,
+    "HistoryContract":"0x15FFf4a3cf3f2201e710174Bc9dae3faFB5Fca5f",
+    "CardContract":"0x274F38Dc294DB36C1e8f88378B14022461D85b44",
+    "EscrowContract":"0xAFf56ee7bDD72354e5b664AB5921F564dF66bF5c"
+}
