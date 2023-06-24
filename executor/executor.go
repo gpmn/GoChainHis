@@ -330,6 +330,25 @@ func (exe *Executor) HistoryDump(daySlotStr string, offset int) (err error) {
 		bidInfo = "Not mint yet"
 	}
 
+	vi, err := exe.history.GetVoteInfo(&bind.CallOpts{}, uint64(unixSec), exe.myAddr)
+	if nil != err {
+		log.Printf("HistoryDump - GetVoteInfo for daySlot:'%s' addr:%s failed : %s", daySlotStr, tmpTm.Format(util.FavoredTimeFormat),
+			exe.myAddr, err.Error())
+	}
+	statusDesc := ""
+	switch record.Status {
+	case 0:
+		statusDesc = fmt.Sprintf("%d - Prepare", record.Status)
+	case 1:
+		statusDesc = fmt.Sprintf("%d - Solved", record.Status)
+	case 2:
+		statusDesc = fmt.Sprintf("%d - Minted", record.Status)
+	case 3:
+		statusDesc = fmt.Sprintf("%d - Bidden", record.Status)
+	default:
+		statusDesc = fmt.Sprintf("%d - Invalid", record.Status)
+
+	}
 	fmt.Printf("%sHistory Dump :: %d => %s StoryCount:%d MAAuctionPrice:%s(ETH) %s\n",
 		util.ColorYellow, unixSec, tmpTm.UTC().Format(util.FavoredTimeFormat), storyCnt,
 		util.ToDecimal(maPrice, 18).String(),
@@ -337,7 +356,7 @@ func (exe *Executor) HistoryDump(daySlotStr string, offset int) (err error) {
 	fmt.Printf("    VoteEndTm       : %s (As Local Time)\n", time.Unix(int64(record.VoteEndTm), 0).Local().Format(util.FavoredTimeFormat))
 	fmt.Printf("    VoteSum         : %s\n", record.VoteSum.String())
 	fmt.Printf("    WeightedVoteSum : %s\n", record.WeightedVoteSum.String())
-	fmt.Printf("    Status          : %d\n", record.Status)
+	fmt.Printf("    Status          : %s\n", statusDesc)
 	fmt.Printf("    AucInitTm       : %s\n", time.Unix(int64(record.AucInitTm), 0).Local().Format(util.FavoredTimeFormat))
 	fmt.Printf("    FinalPrice      : %s(ETH)\n", util.ToDecimal(record.FinalPrice, 18))
 	fmt.Printf("    AucInitPrice    : %s(ETH)\n", util.ToDecimal(record.AucInitPrice, 18))
@@ -345,8 +364,9 @@ func (exe *Executor) HistoryDump(daySlotStr string, offset int) (err error) {
 	fmt.Printf("    NFT Owner       : %s\n", nftOwner)
 	fmt.Printf("    BigStoriesIdx   : [%d, %d, %d]\n", bigStories.Bis[0], bigStories.Bis[1], bigStories.Bis[2])
 	fmt.Printf("    BidInfo         : %s\n", bidInfo)
-	fmt.Printf("    NFT TokenURI    : %s\n", tokenURI)
 	fmt.Printf("    Shares(D/S/C/V) : %d %d %d %d\n", record.ShareOfDev, record.ShareOfSecretary, record.ShareOfCards, record.ShareOfVoters)
+	fmt.Printf("    NFT TokenURI    : %s\n", tokenURI)
+	fmt.Printf("%s    Stories:%s\n", util.ColorYellow, util.ColorSuffix)
 
 	for si := uint8(0); si < uint8(storyCnt); si++ {
 		story, err := exe.history.GetHisRecStoryAt(&bind.CallOpts{}, uint64(unixSec), si)
@@ -365,11 +385,28 @@ func (exe *Executor) HistoryDump(daySlotStr string, offset int) (err error) {
 			}
 		}
 
-		fmt.Printf("    顺序:%d 标记:%s RsvWeight:%d  VoteSum:%-20s(as eth)  Content:%s\n", si, mark,
+		fmt.Printf("    Seq:%d Mark:%s RsvWeight:%d  VoteSum:%-20s(as eth)  Content:%s\n",
+			si, mark,
 			story.RsvWeight,
 			util.ToDecimal(story.VoteSum, 18).String(),
 			story.Content)
 	}
+	statusDesc = ""
+	if vi.Status == 0 {
+		statusDesc = "0 - NotVoted"
+	} else if vi.Status == 1 {
+		statusDesc = "1 - Voted"
+	} else if vi.Status == 2 {
+		statusDesc = "2 - Settled"
+	} else {
+		statusDesc = fmt.Sprintf("%d - Invalid", vi.Status)
+	}
+	fmt.Printf("%s    Vote Info for %s%s\n", util.ColorYellow, exe.myAddr, util.ColorSuffix)
+	fmt.Printf("    MyVoteStatus    : %s\n", statusDesc)
+	fmt.Printf("    MyVotePrefers   : [%d %d %d]\n", vi.Prefer0, vi.Prefer1, vi.Prefer2)
+	fmt.Printf("    MyVoteAmt       : %s(as eth)\n", util.ToDecimal(vi.VoteAmt, 18).String())
+	fmt.Printf("    MyVoteReward    : %s(as eth)\n", util.ToDecimal(vi.Reward, 18).String())
+
 	return nil
 }
 
