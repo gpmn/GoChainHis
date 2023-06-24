@@ -421,6 +421,16 @@ func (exe *Executor) SubmitCandidates(daySlot uint64, candidates []string) (err 
 		return err
 	}
 
+	storyCnt, err := exe.history.GetHisRecStoriesCnt(&bind.CallOpts{}, daySlot)
+	if nil != err {
+		log.Printf("SubmitCandidates - GetHisRecStoriesCnt for daySlot:%d failed:%s", daySlot, err.Error())
+		return err
+	}
+	if storyCnt > 0 {
+		log.Printf("SubmitCandidates - daySlot:%d have submitted", daySlot)
+		return errors.New("have submitted")
+	}
+
 	if !CheckAck("This will Submit candidate to history contract, only secretary allowed.Are Your Sure?(y/N)\n", 10) {
 		log.Printf("SubmitCandidates - canceled by user")
 		return errors.New("canceled by user")
