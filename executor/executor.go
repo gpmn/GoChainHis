@@ -448,6 +448,16 @@ func (exe *Executor) SubmitCandidates(daySlot uint64, candidates []string) (err 
 		return err
 	}
 
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("HistoryResolve - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
+
+	if receipt.Status != 0 {
+		log.Printf("SubmitCandidates - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
+	}
 	log.Printf("SubmitCandidates - operation successfully, tx hash : %s", tx.Hash())
 	return nil
 }
@@ -472,7 +482,7 @@ func (exe *Executor) HistoryVote(daySlotStr string, prefers [3]uint8) (err error
 	tx, err := exe.history.Vote(opts, uint64(tm.Unix()), prefers)
 
 	if nil != err {
-		log.Printf("HistoryVote - history.SubmitCandidates failed : %s", err.Error())
+		log.Printf("HistoryVote - history.HistoryVote failed : %s", err.Error())
 		return err
 	}
 
@@ -582,5 +592,46 @@ func (exe *Executor) HistorySettleCardReward(daySlot string, fromSlots []string)
 	}
 
 	log.Printf("HistorySettleCardReward - operation successfully, tx hash : %s", tx.Hash())
+	return nil
+}
+
+func (exe *Executor) HistoryResolve(daySlotStr string) (err error) {
+	var slot uint64
+
+	tm, err := DaySlotFromStr(daySlotStr, 0)
+	if nil != err {
+		log.Printf("HistoryResolve - bad dayslot '%s', err:%s", daySlotStr, err.Error())
+		return err
+	}
+	slot = uint64(tm.Unix())
+
+	hint := fmt.Sprintf("This will settle ops rewards for %+v. Are Your Sure?(y/N)\n", daySlotStr)
+	if !CheckAck(hint, 3) {
+		log.Printf("HistoryResolve - canceled by user")
+		return errors.New("canceled by user")
+	}
+	opts := &bind.TransactOpts{
+		From:      exe.myAddr,
+		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasLimit:  GAS_LIMIT,
+		Signer:    exe.signer,
+	}
+
+	tx, err := exe.history.Resolve(opts, slot)
+	if nil != err {
+		log.Printf("HistoryResolve - failed, err:%s", err.Error())
+		return err
+	}
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("HistoryResolve - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
+
+	if receipt.Status != 0 {
+		log.Printf("HistoryResolve - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
+	}
+	log.Printf("HistoryResolve - Resolve for %s successfully, tx hash : %s", daySlotStr, tx.Hash())
 	return nil
 }

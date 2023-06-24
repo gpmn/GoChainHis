@@ -11,19 +11,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var SettleOpsCmd = &cobra.Command{
-	Use:   "settleOps -d=2020-06-01,2020-06-03,2020-06-04",
-	Short: "settle the operation rewards for specified days.",
-	Long: `settle the operation rewards (e.g dev team and secretary) for specified days. 
+var ResolveCmd = &cobra.Command{
+	Use:   "resolve -d=2020-06-23",
+	Short: "will resolve history at specified dayslot, secretary only.",
+	Long: `will resolve history at specified dayslot, secretary only.  
 e.g.
-    GoChainHis history settleOps -d=2020-06-01,2020-06-03,2020-06-04
+    GoChainHis history resolve -d=2020-06-23
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(argDaySlots) == 0 {
-			log.Printf("SettleOpsCmd - at least one --dayslot/-d param is required, e.g. '-d=2023-08-08'.")
+		if len(argDaySlots) != 1 {
+			log.Printf("ResolveCmd - just one --dayslot/-d param is required, e.g. '-d=2023-08-08'.")
 			os.Exit(1)
 		}
-		executor.GetExecutor().HistorySettleOpsReward(argDaySlots)
+		executor.GetExecutor().HistoryResolve(argDaySlots[0])
 	},
 }
 
