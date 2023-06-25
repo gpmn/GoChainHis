@@ -448,10 +448,11 @@ func (exe *Executor) SubmitCandidates(daySlot uint64, candidates []string) (err 
 		log.Printf("SubmitCandidates - history.SubmitCandidates failed : %s", err.Error())
 		return err
 	}
-
+	log.Printf("SubmitCandidates - TX %s executed, wait 5 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 5)
 	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
 	if err != nil {
-		log.Printf("HistoryResolve - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		log.Printf("SubmitCandidates - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
 		return err
 	}
 
@@ -487,6 +488,18 @@ func (exe *Executor) HistoryVote(daySlotStr string, prefers [3]uint8) (err error
 		return err
 	}
 
+	log.Printf("HistoryVote - TX %s executed, wait 5 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 5)
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("HistoryVote - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
+
+	if receipt.Status != 0 {
+		log.Printf("HistoryVote - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
+	}
 	log.Printf("HistoryVote - operation successfully, tx hash : %s", tx.Hash())
 	return nil
 }
@@ -632,6 +645,8 @@ func (exe *Executor) HistoryResolve(daySlotStr string) (err error) {
 		log.Printf("HistoryResolve - failed, err:%s", err.Error())
 		return err
 	}
+	log.Printf("HistoryResolve - TX %s executed, wait 5 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 5)
 	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
 	if err != nil {
 		log.Printf("HistoryResolve - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
@@ -682,6 +697,8 @@ func (exe *Executor) HistoryMintAndAuction(daySlotStr string, festivals []string
 		log.Printf("HistoryMintAndAuction - MintAndAuction failed, err:%s", err.Error())
 		return err
 	}
+	log.Printf("HistoryMintAndAuction - TX %s executed, wait 5 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 5)
 	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
 	if err != nil {
 		log.Printf("HistoryMintAndAuction - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
