@@ -456,7 +456,7 @@ func (exe *Executor) SubmitCandidates(daySlot uint64, candidates []string) (err 
 		return err
 	}
 
-	if receipt.Status != 0 {
+	if receipt.Status != 1 {
 		log.Printf("SubmitCandidates - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
 		return errors.New("failed status")
 	}
@@ -496,7 +496,7 @@ func (exe *Executor) HistoryVote(daySlotStr string, prefers [3]uint8) (err error
 		return err
 	}
 
-	if receipt.Status != 0 {
+	if receipt.Status != 1 {
 		log.Printf("HistoryVote - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
 		return errors.New("failed status")
 	}
@@ -653,7 +653,7 @@ func (exe *Executor) HistoryResolve(daySlotStr string) (err error) {
 		return err
 	}
 
-	if receipt.Status != 0 {
+	if receipt.Status != 1 {
 		log.Printf("HistoryResolve - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
 		return errors.New("failed status")
 	}
@@ -705,7 +705,7 @@ func (exe *Executor) HistoryMintAndAuction(daySlotStr string, festivals []string
 		return err
 	}
 
-	if receipt.Status != 0 {
+	if receipt.Status != 1 {
 		log.Printf("HistoryMintAndAuction - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
 		return errors.New("failed status")
 	}
