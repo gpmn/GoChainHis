@@ -747,7 +747,12 @@ func (exe *Executor) HistoryMintAndAuction(daySlotStr string, festivals []string
 		return errors.New("bad record status")
 	}
 
-	hint := fmt.Sprintf("This will Mint and Auction for %+v, with Festivals:%+v. Are Your Sure?(y/N)\n", daySlotStr, festivals)
+	var hint string
+	if len(festivals) == 0 {
+		hint = fmt.Sprintf("This will Mint and Auction for %+v, %sno Festivals specified%s. Are Your Sure?(y/N)\n", daySlotStr, util.ColorRed, util.ColorSuffix)
+	} else {
+		hint = fmt.Sprintf("This will Mint and Auction for %+v, %swith Festivals:%+v%s. Are Your Sure?(y/N)\n", daySlotStr, util.ColorRed, festivals, util.ColorSuffix)
+	}
 	if !CheckAck(hint, 3) {
 		log.Printf("HistoryMintAndAuction - canceled by user")
 		return errors.New("canceled by user")
