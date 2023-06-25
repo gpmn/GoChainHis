@@ -795,7 +795,7 @@ func (exe *Executor) CardClaim(daySlotStr string) (err error) {
 		return err
 	}
 	if record.Status != 3 { // must be in _HistoryStatusBidden = 3 status
-		log.Printf("CardClaim - HistoryMap for %s status is :%d, invalid", daySlotStr, record.Status)
+		log.Printf("CardClaim - HistoryMap  %s status is :%d, invalid", daySlotStr, record.Status)
 		return errors.New("bad record status")
 	}
 

@@ -57,7 +57,6 @@ func Execute() {
 }
 
 func init() {
-
 	rootCmd.AddCommand(historyCmds.HistoryCmd)
 	rootCmd.AddCommand(cardCmds.CardCmd)
 	// Here you will define your flags and configuration settings.

@@ -10,7 +10,7 @@ import (
 
 var argDaySlots []string
 
-// CardCmd represents the card command
+// cardCmd represents the card command
 var CardCmd = &cobra.Command{
 	Use:   "card",
 	Short: "A brief description of your command",
@@ -25,16 +25,15 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	CardCmd.AddCommand(ClaimCmd)
 
-	CardCmd.PersistentFlags().StringSliceVarP(&argDaySlots, "dayslot", "d", nil, "the day to be displayed, can be unix sec of the day, or string of '2023-08-08'")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// CardCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// cardCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// CardCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// cardCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	CardCmd.PersistentFlags().StringSliceVarP(&argDaySlots, "dayslot", "d", nil, "the day to be displayed, can be unix sec of the day, or string of '2023-08-08'")
 }
