@@ -17,7 +17,7 @@ import (
 func handleException() {
 	c := make(chan os.Signal, 10)
 	signal.Notify(c, syscall.SIGABRT)
-	signal.Notify(c, syscall.SIGSTOP)
+	//signal.Notify(c, syscall.SIGSTOP)
 	signal.Notify(c, syscall.SIGINT)
 	signal.Notify(c, syscall.SIGKILL)
 	signal.Notify(c, syscall.SIGSEGV)
@@ -39,8 +39,8 @@ func handleException() {
 			switch sig {
 			case syscall.SIGTERM:
 				fallthrough
-			case syscall.SIGSTOP:
-				fallthrough
+			// case syscall.SIGSTOP:
+			// 	fallthrough
 			case syscall.SIGINT:
 				fallthrough
 			case syscall.SIGABRT:
