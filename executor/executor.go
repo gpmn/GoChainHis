@@ -330,6 +330,17 @@ func (exe *Executor) HistoryDump(daySlotStr string, offset int) (err error) {
 		bidInfo = "Not mint yet"
 	}
 
+	qcp, err := exe.history.QueryCurPrice(&bind.CallOpts{}, uint64(unixSec))
+	var curPrice *big.Int
+	if nil != err {
+		curPrice = big.NewInt(0)
+		if record.Status >= 2 { // _HistoryStatusMinted = 2
+			log.Printf("HistoryDump - QueryCurPrice for %s failed:%s", daySlotStr, err.Error())
+		}
+	} else {
+		curPrice = qcp.CurPrice
+	}
+
 	vi, err := exe.history.GetVoteInfo(&bind.CallOpts{}, uint64(unixSec), exe.myAddr)
 	if nil != err {
 		log.Printf("HistoryDump - GetVoteInfo for daySlot:'%s' addr:%s failed : %s", daySlotStr, tmpTm.Format(util.FavoredTimeFormat),
@@ -361,6 +372,7 @@ func (exe *Executor) HistoryDump(daySlotStr string, offset int) (err error) {
 	fmt.Printf("    AucInitTm       : %s\n", time.Unix(int64(record.AucInitTm), 0).Local().Format(util.FavoredTimeFormat))
 	fmt.Printf("    FinalPrice      : %s(ETH)\n", util.ToDecimal(record.FinalPrice, 18))
 	fmt.Printf("    AucInitPrice    : %s(ETH)\n", util.ToDecimal(record.AucInitPrice, 18))
+	fmt.Printf("    CurPrice        : %s(ETH)\n", util.ToDecimal(curPrice, 18))
 	fmt.Printf("    Winner          : %s\n", record.Winner)
 	fmt.Printf("    NFT Owner       : %s\n", nftOwner)
 	fmt.Printf("    BigStoriesIdx   : [%d, %d, %d]\n", bigStories.Bis[0], bigStories.Bis[1], bigStories.Bis[2])
@@ -407,7 +419,7 @@ func (exe *Executor) HistoryDump(daySlotStr string, offset int) (err error) {
 	fmt.Printf("    MyVotePrefers   : [%d %d %d]\n", vi.Prefer0, vi.Prefer1, vi.Prefer2)
 	fmt.Printf("    MyVoteAmt       : %s(as eth)\n", util.ToDecimal(vi.VoteAmt, 18).String())
 	fmt.Printf("    MyVoteReward    : %s(as eth)\n", util.ToDecimal(vi.Reward, 18).String())
-
+	fmt.Println()
 	return nil
 }
 
@@ -661,6 +673,61 @@ func (exe *Executor) HistoryResolve(daySlotStr string) (err error) {
 	return nil
 }
 
+func (exe *Executor) HistoryBid(daySlotStr string) (err error) {
+	var slot uint64
+
+	tm, err := DaySlotFromStr(daySlotStr, 0)
+	if nil != err {
+		log.Printf("HistoryBid - bad dayslot '%s', err:%s", daySlotStr, err.Error())
+		return err
+	}
+	slot = uint64(tm.Unix())
+
+	qcp, err := exe.history.QueryCurPrice(&bind.CallOpts{}, slot)
+	if nil != err {
+		log.Printf("HistoryBid - QueryCurPrice for %s failed:%s", daySlotStr, err.Error())
+		return err
+	}
+
+	if qcp.HisStatus != 2 { // must be _HistoryStatusMinted = 2 status
+		log.Printf("HistoryBid - HistoryMap for %s status is :%d, invalid", daySlotStr, qcp.HisStatus)
+		return errors.New("bad record status")
+	}
+
+	hint := fmt.Sprintf("This will bid for %+v at price : %s eth. Are Your Sure?(y/N)\n", daySlotStr, util.ToDecimal(qcp.CurPrice, 18))
+	if !CheckAck(hint, 3) {
+		log.Printf("HistoryBid - canceled by user")
+		return errors.New("canceled by user")
+	}
+	opts := &bind.TransactOpts{
+		From:      exe.myAddr,
+		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasLimit:  GAS_LIMIT,
+		Signer:    exe.signer,
+		Value:     qcp.CurPrice,
+	}
+
+	tx, err := exe.history.Bid(opts, slot)
+	if nil != err {
+		log.Printf("HistoryBid - failed, err:%s", err.Error())
+		return err
+	}
+	log.Printf("HistoryBid - TX %s executed, wait 5 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 5)
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("HistoryBid - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
+
+	if receipt.Status != 1 {
+		log.Printf("HistoryBid - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
+	}
+	log.Printf("HistoryBid - Bid for %s successfully, tx hash : %s", daySlotStr, tx.Hash())
+	return nil
+}
+
 func (exe *Executor) HistoryMintAndAuction(daySlotStr string, festivals []string) (err error) {
 	var slot uint64
 	tm, err := DaySlotFromStr(daySlotStr, 0)
@@ -675,7 +742,7 @@ func (exe *Executor) HistoryMintAndAuction(daySlotStr string, festivals []string
 		log.Printf("HistoryMintAndAuction - HistoryMap for %s failed : %s", daySlotStr, err.Error())
 		return err
 	}
-	if record.Status != 1 { // must be in _HistoryStatusSolved=1 status
+	if record.Status != 1 { // must be in _HistoryStatusSolved = 1 status
 		log.Printf("HistoryMintAndAuction - HistoryMap for %s status is :%d, invalid", daySlotStr, record.Status)
 		return errors.New("bad record status")
 	}
@@ -710,5 +777,57 @@ func (exe *Executor) HistoryMintAndAuction(daySlotStr string, festivals []string
 		return errors.New("failed status")
 	}
 	log.Printf("HistoryMintAndAuction - MintAndAuction for %s successfully, tx hash : %s", daySlotStr, tx.Hash())
+	return nil
+}
+
+func (exe *Executor) CardClaim(daySlotStr string) (err error) {
+	var slot uint64
+	tm, err := DaySlotFromStr(daySlotStr, 0)
+	if nil != err {
+		log.Printf("CardClaim - bad dayslot '%s', err:%s", daySlotStr, err.Error())
+		return err
+	}
+	slot = uint64(tm.Unix())
+
+	record, err := exe.history.HistoryMap(&bind.CallOpts{}, slot)
+	if nil != err {
+		log.Printf("CardClaim - HistoryMap for %s failed : %s", daySlotStr, err.Error())
+		return err
+	}
+	if record.Status != 3 { // must be in _HistoryStatusBidden = 3 status
+		log.Printf("CardClaim - HistoryMap for %s status is :%d, invalid", daySlotStr, record.Status)
+		return errors.New("bad record status")
+	}
+
+	hint := fmt.Sprintf("This will Claim card for %+v, only winner of auction allowed. Are Your Sure?(y/N)\n", daySlotStr)
+	if !CheckAck(hint, 3) {
+		log.Printf("CardClaim - canceled by user")
+		return errors.New("canceled by user")
+	}
+	opts := &bind.TransactOpts{
+		From:      exe.myAddr,
+		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasLimit:  GAS_LIMIT,
+		Signer:    exe.signer,
+	}
+
+	tx, err := exe.card.Claim(opts, slot)
+	if nil != err {
+		log.Printf("CardClaim - MintAndAuction failed, err:%s", err.Error())
+		return err
+	}
+	log.Printf("CardClaim - TX %s executed, wait 5 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 5)
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("CardClaim - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
+
+	if receipt.Status != 1 {
+		log.Printf("CardClaim - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
+	}
+	log.Printf("CardClaim - MintAndAuction for %s successfully, tx hash : %s", daySlotStr, tx.Hash())
 	return nil
 }

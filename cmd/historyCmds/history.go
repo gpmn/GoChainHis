@@ -36,6 +36,7 @@ func init() {
 	HistoryCmd.AddCommand(SettleOpsCmd)
 	HistoryCmd.AddCommand(ResolveCmd)
 	HistoryCmd.AddCommand(MintAndAucCmd)
+	HistoryCmd.AddCommand(BidCmd)
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

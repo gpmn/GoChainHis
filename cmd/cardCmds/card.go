@@ -2,16 +2,16 @@
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 
 */
-package cmd
+package cardCmds
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
-// cardCmd represents the card command
-var cardCmd = &cobra.Command{
+var argDaySlots []string
+
+// CardCmd represents the card command
+var CardCmd = &cobra.Command{
 	Use:   "card",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -21,20 +21,20 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("card called")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(cardCmd)
+	CardCmd.AddCommand(ClaimCmd)
 
+	CardCmd.PersistentFlags().StringSliceVarP(&argDaySlots, "dayslot", "d", nil, "the day to be displayed, can be unix sec of the day, or string of '2023-08-08'")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// cardCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// CardCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// cardCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// CardCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

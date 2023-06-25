@@ -10,6 +10,7 @@ import (
 
 	"GoChainHis/executor"
 
+	"GoChainHis/cmd/cardCmds"
 	"GoChainHis/cmd/historyCmds"
 
 	"github.com/spf13/cobra"
@@ -58,6 +59,7 @@ func Execute() {
 func init() {
 
 	rootCmd.AddCommand(historyCmds.HistoryCmd)
+	rootCmd.AddCommand(cardCmds.CardCmd)
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
