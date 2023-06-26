@@ -4,10 +4,10 @@ ChainHis CLI utils
 cd this project folder, then type "go run ." to execute.
 
 # escrow deposit
-- go run . escrow deposit 0.1
+- go run . escrow deposit --amount 0.1
 
 # escrow withdraw
-- go run . escrow withdraw 0.1
+- go run . escrow withdraw --amount 0.1
 
 # escrow dump
 - go run . escrow dump
