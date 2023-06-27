@@ -13,11 +13,13 @@ cd this project folder, then type "go run ." to execute.
 - go run . escrow dump
 
 # history dump
+"-n" param will dump continous date's history infomation.
+
 e.g. :: 
-- go run . history dump -d 2023-06-22 -n 2
+- go run . history dump -d 2023-06-22 -n 2 
 - go run . history dump -d 2023-06-23
 
-# history submit
+# history submit [secretarty only]
 - go run . history submit -d 2023-06-23 -s subs/sub.0623.json
   
 Note:: 
@@ -39,6 +41,14 @@ Note::
     "<CN><港媒:盒马鲜生最快11月IPO</CN><EN>Hong Kong media: Hema Xiansheng will IPO in November ASAP</EN>"
 ```
 
+# history resolve [secretarty only]
+resolve command will resolve a date's vote result once **VoteEndTm expired**.
+- go run . history resolve -d 2023-06-22
+
+# history mintAndAuc [secretarty only]
+mintAndAuc command will mint NFT and issue its auction.
+- go run . history mintAndAuc -d 2023-06-22
+  
 # history vote
 go run . history vote -d 2023-06-23 -p 0,2,3
 
