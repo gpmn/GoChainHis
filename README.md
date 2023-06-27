@@ -21,9 +21,12 @@
 * 投票之后，可以用history settleVote结算分红，可以一次性把多次结算的分红通过history claim一次性提取到自己帐号。
 
 # GoChainHis
-ChainHis CLI utils
+ChainHis CLI utils  
 
-cd this project folder, then type "go run ." to execute. Also, it is OK to use 'go install .' to build and install GoChainHis to your $GOPATH/bin/ folder, then use GoChainHis directly.
+cd this project folder, then type "go run ." to execute. Also, it is OK to use 'go install .' to build and install GoChainHis to your $GOPATH/bin/ folder, then use GoChainHis directly.  
+
+需要先参考conf.json.demo,编辑自己的conf.json文件，只需要修改其中的MyAddr和MyPrivKey。注意::需要确保MyAddr地址**大小写正确**。  
+自己的conf.json要么放在默认的$Home/.GoChainHis/目录下,要么通过--conf参数指定其全路径。  
 
 ## escrow deposit
 - go run . escrow deposit --amount 0.1
