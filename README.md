@@ -20,7 +20,9 @@ e.g. ::
 # history submit
 - go run . history submit -d 2023-06-23 -s subs/sub.0623.json
   
-Note:: sub.0623.json should be as the following format:
+Note:: 
+1). Date field of sub.0623.json must same as -d params e.g. 2023-06-23  
+2). sub.0623.json should be as the following format:  
 ```
 {
     "Date": "2023-06-23 UTC",
@@ -31,6 +33,10 @@ Note:: sub.0623.json should be as the following format:
         "Coinbase在最高院赢得与美国证交会的诉讼"
     ]
 }
+```
+3). it is suggeust that the content should wrap/segment with <CN></CN> and <EN></EN> tags for internationalize, e.g.:
+```
+    "<CN><港媒:盒马鲜生最快11月IPO</CN><EN>Hong Kong media: Hema Xiansheng will IPO in November ASAP</EN>"
 ```
 
 # history vote
