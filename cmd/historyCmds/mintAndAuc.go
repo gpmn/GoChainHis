@@ -12,7 +12,7 @@ import (
 )
 
 var MintAndAucCmd = &cobra.Command{
-	Use:   "mintAndAuc -d=2020-06-23",
+	Use:   "mintAndAuc",
 	Short: "will mintAndAuc history at specified dayslot, secretary only.",
 	Long: `will mintAndAuc history at specified dayslot, secretary only.  
 e.g.

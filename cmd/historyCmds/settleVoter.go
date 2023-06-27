@@ -12,7 +12,7 @@ import (
 )
 
 var SettleVoterCmd = &cobra.Command{
-	Use:   "settleVote -b=2020-06-01,2020-06-03,2020-06-04",
+	Use:   "settleVote",
 	Short: "settle the vote rewards for specified days.",
 	Long: `settle the vote rewards for specified days. 
 e.g.

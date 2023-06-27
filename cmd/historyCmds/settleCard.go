@@ -12,7 +12,7 @@ import (
 )
 
 var SettleCardCmd = &cobra.Command{
-	Use:   "settleCard -b=2020-06-01,2020-06-03,2020-06-04",
+	Use:   "settleCard",
 	Short: "settle the card rewards for specified days.",
 	Long: `settle the card rewards for specified days. 
 e.g.

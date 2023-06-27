@@ -12,7 +12,7 @@ import (
 )
 
 var SettleOpsCmd = &cobra.Command{
-	Use:   "settleOps -d=2020-06-01,2020-06-03,2020-06-04",
+	Use:   "settleOps",
 	Short: "settle the operation rewards for specified days.",
 	Long: `settle the operation rewards (e.g dev team and secretary) for specified days. 
 e.g.

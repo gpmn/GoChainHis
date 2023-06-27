@@ -12,7 +12,7 @@ import (
 )
 
 var BidCmd = &cobra.Command{
-	Use:   "bid -d=2020-06-23",
+	Use:   "bid",
 	Short: "will bid nft for specified dayslot.",
 	Long: `will bid nft for specified dayslot.  
 e.g.
