@@ -238,20 +238,6 @@ Are Your Sure?(y/N)`,
 		log.Printf("EscrowWithdraw - Canceled by user")
 		return errors.New("canceled by user")
 	}
-	var ack string
-	cnt, err := fmt.Scanf("%s", &ack)
-	if nil != err {
-		log.Printf("EscrowWithdraw - fmt.Scanf failed : %s", err.Error())
-		return err
-	}
-	if cnt != 1 {
-		log.Printf("EscrowWithdraw - fmt.Scanf got %d resp, invalid", cnt)
-		return errors.New("bad input")
-	}
-	if ack != "Y" && ack != "y" {
-		log.Printf("EscrowWithdraw - fmt.Scanf got ack '%s', not 'Y' or 'y', skip withdraw", ack)
-		return errors.New("canceled by user")
-	}
 
 	opts := &bind.TransactOpts{
 		From:      exe.myAddr,
@@ -266,9 +252,21 @@ Are Your Sure?(y/N)`,
 		return err
 	}
 
-	log.Printf("EscrowWithdraw - Withdraw %f ETH successfully, tx hash : %s", amount, tx.Hash())
+	log.Printf("EscrowWithdraw - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("EscrowWithdraw - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
 
-	return err
+	if receipt.Status != 1 {
+		log.Printf("EscrowWithdraw - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
+	}
+
+	log.Printf("EscrowWithdraw - Withdraw %f ETH successfully, tx hash : %s", amount, tx.Hash())
+	return nil
 }
 
 func (exe *Executor) HistoryDump(daySlotStr string, offset int) (err error) {
