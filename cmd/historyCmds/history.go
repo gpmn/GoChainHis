@@ -8,7 +8,6 @@ import (
 )
 
 var argDaySlots []string
-var argOtherSlots []string
 var argPrefers []int
 var argFestivals []string
 var argDumpCnt int
@@ -52,10 +51,9 @@ func init() {
 	// historyCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 	HistoryCmd.PersistentFlags().StringSliceVarP(&argDaySlots, "dayslot", "d", nil, "the day to be displayed, can be unix sec of the day, or string of '2023-08-08'")
+	HistoryCmd.PersistentFlags().StringVarP(&argEarlierSlotStr, "left", "l", "", "earlier(left) day slot for dumpCardRwd command")
+	HistoryCmd.PersistentFlags().StringVarP(&argLaterSlotStr, "right", "r", "", "later(right) day slot for dumpCardRwd command")
 	VoteCmd.Flags().IntSliceVarP(&argPrefers, "prefers", "p", []int{}, "prefered big news index, must three items, e.a. : 0,1,2")
 	DumpCmd.Flags().IntVarP(&argDumpCnt, "count", "n", 1, "dump continuos count since specified daySlot.")
-	SettleCardCmd.Flags().StringSliceVarP(&argOtherSlots, "otherSlots", "o", nil, "settle rewards from other slots to my slot.")
 	MintAndAucCmd.Flags().StringSliceVarP(&argFestivals, "festivals", "e", nil, "Mint NFT and issue auction, with specified festivals")
-	DumpRewardCmd.Flags().StringVarP(&argEarlierSlotStr, "left", "l", "", "earlier(left) day slot for dumpCardRwd command")
-	DumpRewardCmd.Flags().StringVarP(&argLaterSlotStr, "right", "r", "", "later(right) day slot for dumpCardRwd command")
 }

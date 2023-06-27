@@ -20,17 +20,17 @@ e.g.
     GoChainHis history settleCard -d=2023-06-01 -o=2023-06-03
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(argDaySlots) != 1 {
-			log.Printf("SettleCardCmd - only one --dayslot/-d param is required, e.g. '-d=2023-08-08'.")
+		if argEarlierSlotStr == "" {
+			log.Printf("SettleCardCmd - --left/-l param is required, e.g. '-l=2023-08-08'.")
 			os.Exit(1)
 		}
 
-		if len(argOtherSlots) == 0 {
-			log.Printf("SettleCardCmd - at least one --fromSlots/-f param is required, e.g. '-d=2023-08-08,2023-08-02'.")
+		if argLaterSlotStr == "" {
+			log.Printf("SettleCardCmd - --right/-r param is required, e.g. '-r=2023-08-08'.")
 			os.Exit(1)
 		}
 
-		executor.GetExecutor().HistorySettleCardReward(argDaySlots[0], argOtherSlots)
+		executor.GetExecutor().HistorySettleCardReward(argEarlierSlotStr, []string{argLaterSlotStr})
 	},
 }
 
