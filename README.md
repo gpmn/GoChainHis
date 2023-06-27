@@ -20,6 +20,12 @@
 这一设计是希望投票人认真的选择。
 * 投票之后，可以用history settleVote结算分红，可以一次性把多次结算的分红通过history claim一次性提取到自己帐号。
 
+# 关于拍卖
+* 在秘书通过mintAndAuc创建并发起拍卖之后,NFT在合约内启动了拍卖，拍卖前的NFT所有者是Card合约。  
+* 拍卖方式采用荷兰拍，先到先得。价格从初始拍卖价格每隔1小时降价1%，最低降价到0.01ETH。初始拍卖价格是最近十次成交价的EMA平均价的1.5倍，且不低于0.02ETH(曾经是0.04ETH，已修改)。  
+* 可以在history dump命令中看到初始拍卖价AucInitPrice，最新拍卖价CurPrice，最终成交价FinalPrice。  
+* 通过 history bid命令即可以最新拍卖价竞拍。
+
 # GoChainHis
 ChainHis CLI utils  
 
