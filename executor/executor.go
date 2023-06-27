@@ -460,8 +460,8 @@ func (exe *Executor) SubmitCandidates(daySlot uint64, candidates []string) (err 
 		log.Printf("SubmitCandidates - history.SubmitCandidates failed : %s", err.Error())
 		return err
 	}
-	log.Printf("SubmitCandidates - TX %s executed, wait 5 seconds for the receipt ...", tx.Hash())
-	time.Sleep(time.Second * 5)
+	log.Printf("SubmitCandidates - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
 	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
 	if err != nil {
 		log.Printf("SubmitCandidates - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
@@ -500,8 +500,8 @@ func (exe *Executor) HistoryVote(daySlotStr string, prefers [3]uint8) (err error
 		return err
 	}
 
-	log.Printf("HistoryVote - TX %s executed, wait 5 seconds for the receipt ...", tx.Hash())
-	time.Sleep(time.Second * 5)
+	log.Printf("HistoryVote - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
 	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
 	if err != nil {
 		log.Printf("HistoryVote - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
@@ -657,8 +657,8 @@ func (exe *Executor) HistoryResolve(daySlotStr string) (err error) {
 		log.Printf("HistoryResolve - failed, err:%s", err.Error())
 		return err
 	}
-	log.Printf("HistoryResolve - TX %s executed, wait 5 seconds for the receipt ...", tx.Hash())
-	time.Sleep(time.Second * 5)
+	log.Printf("HistoryResolve - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
 	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
 	if err != nil {
 		log.Printf("HistoryResolve - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
@@ -712,8 +712,8 @@ func (exe *Executor) HistoryBid(daySlotStr string) (err error) {
 		log.Printf("HistoryBid - failed, err:%s", err.Error())
 		return err
 	}
-	log.Printf("HistoryBid - TX %s executed, wait 5 seconds for the receipt ...", tx.Hash())
-	time.Sleep(time.Second * 5)
+	log.Printf("HistoryBid - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
 	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
 	if err != nil {
 		log.Printf("HistoryBid - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
@@ -769,8 +769,8 @@ func (exe *Executor) HistoryMintAndAuction(daySlotStr string, festivals []string
 		log.Printf("HistoryMintAndAuction - MintAndAuction failed, err:%s", err.Error())
 		return err
 	}
-	log.Printf("HistoryMintAndAuction - TX %s executed, wait 5 seconds for the receipt ...", tx.Hash())
-	time.Sleep(time.Second * 5)
+	log.Printf("HistoryMintAndAuction - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
 	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
 	if err != nil {
 		log.Printf("HistoryMintAndAuction - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
@@ -821,8 +821,8 @@ func (exe *Executor) CardClaim(daySlotStr string) (err error) {
 		log.Printf("CardClaim - MintAndAuction failed, err:%s", err.Error())
 		return err
 	}
-	log.Printf("CardClaim - TX %s executed, wait 5 seconds for the receipt ...", tx.Hash())
-	time.Sleep(time.Second * 5)
+	log.Printf("CardClaim - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
 	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
 	if err != nil {
 		log.Printf("CardClaim - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
