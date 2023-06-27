@@ -398,19 +398,23 @@ func (exe *Executor) HistoryDump(daySlotStr string, offset int) (err error) {
 			}
 		}
 
-		fmt.Printf("    Seq:%d Mark:%s RsvWeight:%d  VoteSum:%-20s(as eth)  Content:%s\n",
+		fmt.Printf("    Seq:%d %s RsvWeight:%d  VoteSum:%-20s(as eth)  Content:%s\n",
 			si, mark,
 			story.RsvWeight,
 			util.ToDecimal(story.VoteSum, 18).String(),
 			story.Content)
 	}
 	statusDesc = ""
+	rewardDesc := ""
 	if vi.Status == 0 {
 		statusDesc = "0 - NotVoted"
+		rewardDesc = "No Reward"
 	} else if vi.Status == 1 {
 		statusDesc = "1 - Voted"
+		rewardDesc = util.ColorRed + "Not Settle Yet" + util.ColorSuffix
 	} else if vi.Status == 2 {
 		statusDesc = "2 - Settled"
+		rewardDesc = util.ColorGreen + "Settled" + util.ColorSuffix
 	} else {
 		statusDesc = fmt.Sprintf("%d - Invalid", vi.Status)
 	}
@@ -418,7 +422,7 @@ func (exe *Executor) HistoryDump(daySlotStr string, offset int) (err error) {
 	fmt.Printf("    MyVoteStatus    : %s\n", statusDesc)
 	fmt.Printf("    MyVotePrefers   : [%d %d %d]\n", vi.Prefer0, vi.Prefer1, vi.Prefer2)
 	fmt.Printf("    MyVoteAmt       : %s(as eth)\n", util.ToDecimal(vi.VoteAmt, 18).String())
-	fmt.Printf("    MyVoteReward    : %s(as eth)\n", util.ToDecimal(vi.Reward, 18).String())
+	fmt.Printf("    MyVoteReward    : %s(as eth) %s\n", util.ToDecimal(vi.Reward, 18).String(), rewardDesc)
 	fmt.Println()
 	return nil
 }
