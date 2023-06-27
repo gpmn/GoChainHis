@@ -20,6 +20,8 @@ e.g. ::
 - go run . history dump -d 2023-06-23
 
 # history submit [secretarty only]
+submit command will submit candidate news for voters.
+
 - go run . history submit -d 2023-06-23 -s subs/sub.0623.json
   
 Note:: 
