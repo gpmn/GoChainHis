@@ -12,7 +12,7 @@
 # GoChainHis
 ChainHis CLI utils
 
-cd this project folder, then type "go run ." to execute.
+cd this project folder, then type "go run ." to execute. Also, it is OK to use 'go install .' to build and install GoChainHis to your $GOPATH/bin/ folder, then use GoChainHis directly.
 
 ## escrow deposit
 - go run . escrow deposit --amount 0.1
