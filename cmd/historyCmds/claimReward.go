@@ -5,25 +5,19 @@ package historyCmds
 
 import (
 	"GoChainHis/executor"
-	"log"
-	"os"
 
 	"github.com/spf13/cobra"
 )
 
-var ResolveCmd = &cobra.Command{
-	Use:   "resolve",
-	Short: "will resolve history at specified dayslot, secretary only.",
-	Long: `will resolve history at specified dayslot, secretary only.  
+var ClaimRewardCmd = &cobra.Command{
+	Use:   "claimReward",
+	Short: "will claimReward nft for specified dayslot.",
+	Long: `will claimReward nft for specified dayslot.  
 e.g.
-    GoChainHis history resolve -d=2020-06-23
+    GoChainHis history claimReward -d=2020-06-23
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(argDaySlots) != 1 {
-			log.Printf("ResolveCmd - just one --dayslot/-d param is required, e.g. '-d=2023-08-08'.")
-			os.Exit(1)
-		}
-		executor.GetExecutor().HistoryResolve(argDaySlots[0])
+		executor.GetExecutor().HistoryClaimReward()
 	},
 }
 

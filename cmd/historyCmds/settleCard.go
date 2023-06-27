@@ -15,20 +15,22 @@ var SettleCardCmd = &cobra.Command{
 	Use:   "settleCard",
 	Short: "settle the card rewards for specified days.",
 	Long: `settle the card rewards for specified days. 
+NOTE:: other slots must later than daySlot specified by -d command.
 e.g.
-    GoChainHis history settleCard -b=2020-06-01,2020-06-03,2020-06-04
+    GoChainHis history settleCard -d=2023-06-01 -o=2023-06-03
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(argDaySlots) == 1 {
+		if len(argDaySlots) != 1 {
 			log.Printf("SettleCardCmd - only one --dayslot/-d param is required, e.g. '-d=2023-08-08'.")
 			os.Exit(1)
 		}
 
-		if len(argFromSlots) == 0 {
+		if len(argOtherSlots) == 0 {
 			log.Printf("SettleCardCmd - at least one --fromSlots/-f param is required, e.g. '-d=2023-08-08,2023-08-02'.")
 			os.Exit(1)
 		}
-		executor.GetExecutor().HistorySettleCardReward(argDaySlots[0], argFromSlots)
+
+		executor.GetExecutor().HistorySettleCardReward(argDaySlots[0], argOtherSlots)
 	},
 }
 

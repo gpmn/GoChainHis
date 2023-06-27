@@ -524,6 +524,17 @@ func (exe *Executor) HistorySettleVoterReward(daySlots []string) (err error) {
 			log.Printf("HistorySettleVoterReward - bad dayslot '%s', err:%s", daySlots[idx], err.Error())
 			return err
 		}
+		res, err := exe.history.GetVoteInfo(&bind.CallOpts{}, uint64(tm.Unix()), exe.myAddr)
+		if nil != err {
+			log.Printf("HistorySettleVoterReward - GetVoteInfo for %s failed:%s", daySlots[idx], err.Error())
+			return err
+		}
+		if res.Status != 1 { // uint8 constant _VoteStatusVoted = 1;        /* 已经投票 */
+			log.Printf("HistorySettleVoterReward - can not claim daySlot %s, since it's status:%d invalid ",
+				daySlots[idx], res.Status)
+			return errors.New("bad status")
+		}
+
 		tms = append(tms, uint64(tm.Unix()))
 	}
 
@@ -545,6 +556,18 @@ func (exe *Executor) HistorySettleVoterReward(daySlots []string) (err error) {
 		return err
 	}
 
+	log.Printf("HistorySettleVoterReward - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("HistorySettleVoterReward - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
+	if receipt.Status != 1 {
+		log.Printf("HistorySettleVoterReward - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
+	}
+
 	log.Printf("HistorySettleVoterReward - operation successfully, tx hash : %s", tx.Hash())
 	return nil
 }
@@ -557,6 +580,23 @@ func (exe *Executor) HistorySettleOpsReward(daySlots []string) (err error) {
 			log.Printf("HistorySettleOpsReward - bad dayslot '%s', err:%s", daySlots[idx], err.Error())
 			return err
 		}
+
+		or, err := exe.history.OpsRewardsMap(&bind.CallOpts{}, uint64(tm.Unix()))
+		if or.Cmp(big.NewInt(0)) > 0 {
+			log.Printf("HistorySettleOpsReward - daySlot:%s have been claimed", daySlots[idx])
+			return errors.New("have been claimed")
+		}
+
+		record, err := exe.history.HistoryMap(&bind.CallOpts{}, uint64(tm.Unix()))
+		if nil != err {
+			log.Printf("HistorySettleOpsReward - HistoryMap for %s failed : %s", daySlots[idx], err.Error())
+			return err
+		}
+		if record.Status != 3 { // must be in _HistoryStatusBidden = 3
+			log.Printf("HistorySettleOpsReward - HistoryMap for %s status is :%d, invalid", daySlots[idx], record.Status)
+			return errors.New("bad record status")
+		}
+
 		slots = append(slots, uint64(tm.Unix()))
 	}
 
@@ -578,28 +618,57 @@ func (exe *Executor) HistorySettleOpsReward(daySlots []string) (err error) {
 		return err
 	}
 
+	log.Printf("HistorySettleOpsReward - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("HistorySettleOpsReward - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
+	if receipt.Status != 1 {
+		log.Printf("HistorySettleOpsReward - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
+	}
+
 	log.Printf("HistorySettleOpsReward - operation successfully, tx hash : %s", tx.Hash())
 	return nil
 }
 
-func (exe *Executor) HistorySettleCardReward(daySlot string, fromSlots []string) (err error) {
-	var froms []uint64
-	for idx := range fromSlots {
-		tm, err := DaySlotFromStr(fromSlots[idx], 0)
-		if nil != err {
-			log.Printf("HistorySettleCardReward - bad fromSlots '%s', err:%s", fromSlots[idx], err.Error())
-			return err
-		}
-		froms = append(froms, uint64(tm.Unix()))
-	}
-
-	to, err := DaySlotFromStr(daySlot, 0)
+func (exe *Executor) HistorySettleCardReward(daySlot string, rightSlots []string) (err error) {
+	left, err := DaySlotFromStr(daySlot, 0)
 	if nil != err {
 		log.Printf("HistorySettleCardReward - bad dayslot '%s', err:%s", daySlot, err.Error())
 		return err
 	}
 
-	hint := fmt.Sprintf("This will settle card rewards for %+v. Are Your Sure?(y/N)\n", fromSlots)
+	var rights []uint64
+	for idx := range rightSlots {
+		tm, err := DaySlotFromStr(rightSlots[idx], 0)
+		if nil != err {
+			log.Printf("HistorySettleCardReward - bad rightSlots '%s', err:%s", rightSlots[idx], err.Error())
+			return err
+		}
+		cr, err := exe.history.CardRewardsMap(&bind.CallOpts{}, uint64(left.Unix()), big.NewInt(tm.Unix()))
+		if cr.Cmp(big.NewInt(0)) > 0 {
+			log.Printf("HistorySettleCardReward - daySlot:%s rightSlot:%s have been claimed",
+				daySlot, rightSlots[idx])
+			return errors.New("have been claimed")
+		}
+
+		rightRecord, err := exe.history.HistoryMap(&bind.CallOpts{}, uint64(tm.Unix()))
+		if nil != err {
+			log.Printf("HistorySettleCardReward - HistoryMap for %s failed : %s", rightSlots[idx], err.Error())
+			return err
+		}
+		if rightRecord.Status != 3 { // must be in _HistoryStatusBidden = 3
+			log.Printf("HistorySettleCardReward - HistoryMap for %s status is :%d, invalid", rightSlots[idx], rightRecord.Status)
+			return errors.New("bad record status")
+		}
+
+		rights = append(rights, uint64(tm.Unix()))
+	}
+
+	hint := fmt.Sprintf("This will settle card rewards for %+v. Are Your Sure?(y/N)\n", rightSlots)
 	if !CheckAck(hint, 3) {
 		log.Printf("HistorySettleCardReward - canceled by user")
 		return errors.New("canceled by user")
@@ -610,11 +679,23 @@ func (exe *Executor) HistorySettleCardReward(daySlot string, fromSlots []string)
 		GasLimit:  GAS_LIMIT,
 		Signer:    exe.signer,
 	}
-	tx, err := exe.history.SettleCardReward(opts, uint64(to.Unix()), froms)
+	tx, err := exe.history.SettleCardReward(opts, uint64(left.Unix()), rights)
 
 	if nil != err {
 		log.Printf("HistorySettleCardReward - history.SettleCardReward failed : %s", err.Error())
 		return err
+	}
+
+	log.Printf("HistorySettleCardReward - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("HistorySettleCardReward - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
+	if receipt.Status != 1 {
+		log.Printf("HistorySettleCardReward - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
 	}
 
 	log.Printf("HistorySettleCardReward - operation successfully, tx hash : %s", tx.Hash())
@@ -622,14 +703,12 @@ func (exe *Executor) HistorySettleCardReward(daySlot string, fromSlots []string)
 }
 
 func (exe *Executor) HistoryResolve(daySlotStr string) (err error) {
-	var slot uint64
-
 	tm, err := DaySlotFromStr(daySlotStr, 0)
 	if nil != err {
 		log.Printf("HistoryResolve - bad dayslot '%s', err:%s", daySlotStr, err.Error())
 		return err
 	}
-	slot = uint64(tm.Unix())
+	slot := uint64(tm.Unix())
 	record, err := exe.history.HistoryMap(&bind.CallOpts{}, slot)
 	if nil != err {
 		log.Printf("HistoryResolve - HistoryMap for %s failed : %s", daySlotStr, err.Error())
@@ -674,14 +753,12 @@ func (exe *Executor) HistoryResolve(daySlotStr string) (err error) {
 }
 
 func (exe *Executor) HistoryBid(daySlotStr string) (err error) {
-	var slot uint64
-
 	tm, err := DaySlotFromStr(daySlotStr, 0)
 	if nil != err {
 		log.Printf("HistoryBid - bad dayslot '%s', err:%s", daySlotStr, err.Error())
 		return err
 	}
-	slot = uint64(tm.Unix())
+	slot := uint64(tm.Unix())
 
 	qcp, err := exe.history.QueryCurPrice(&bind.CallOpts{}, slot)
 	if nil != err {
@@ -729,13 +806,12 @@ func (exe *Executor) HistoryBid(daySlotStr string) (err error) {
 }
 
 func (exe *Executor) HistoryMintAndAuction(daySlotStr string, festivals []string) (err error) {
-	var slot uint64
 	tm, err := DaySlotFromStr(daySlotStr, 0)
 	if nil != err {
 		log.Printf("HistoryMintAndAuction - bad dayslot '%s', err:%s", daySlotStr, err.Error())
 		return err
 	}
-	slot = uint64(tm.Unix())
+	slot := uint64(tm.Unix())
 
 	record, err := exe.history.HistoryMap(&bind.CallOpts{}, slot)
 	if nil != err {
@@ -786,13 +862,12 @@ func (exe *Executor) HistoryMintAndAuction(daySlotStr string, festivals []string
 }
 
 func (exe *Executor) CardClaim(daySlotStr string) (err error) {
-	var slot uint64
 	tm, err := DaySlotFromStr(daySlotStr, 0)
 	if nil != err {
 		log.Printf("CardClaim - bad dayslot '%s', err:%s", daySlotStr, err.Error())
 		return err
 	}
-	slot = uint64(tm.Unix())
+	slot := uint64(tm.Unix())
 
 	record, err := exe.history.HistoryMap(&bind.CallOpts{}, slot)
 	if nil != err {
@@ -834,5 +909,88 @@ func (exe *Executor) CardClaim(daySlotStr string) (err error) {
 		return errors.New("failed status")
 	}
 	log.Printf("CardClaim - MintAndAuction for %s successfully, tx hash : %s", daySlotStr, tx.Hash())
+	return nil
+}
+
+func (exe *Executor) HistoryClaimReward() (err error) {
+	pr, err := exe.history.PendingRewardsMap(&bind.CallOpts{}, exe.myAddr)
+	if nil != err {
+		log.Printf("HistoryClaimReward - Query PendingRewardsMap for myaddr:%s failed : %s", exe.myAddr, err.Error())
+		return err
+	}
+	if pr.Cmp(big.NewInt(0)) <= 0 {
+		log.Printf("HistoryClaimReward - PendingRewardsMap for myaddr:%s is 0, nothing to claim", exe.myAddr)
+		return errors.New("no rewards to claim")
+	}
+
+	hint := fmt.Sprintf("This will Claim rewards for my address:%s with amount : %s eth. Are Your Sure?(y/N)\n", exe.myAddr,
+		util.ToDecimal(pr, 18))
+	if !CheckAck(hint, 3) {
+		log.Printf("HistoryClaimReward - canceled by user")
+		return errors.New("canceled by user")
+	}
+	opts := &bind.TransactOpts{
+		From:      exe.myAddr,
+		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasLimit:  GAS_LIMIT,
+		Signer:    exe.signer,
+	}
+
+	tx, err := exe.history.ClaimReward(opts)
+	if nil != err {
+		log.Printf("HistoryClaimReward - ClaimReward failed, err:%s", err.Error())
+		return err
+	}
+	log.Printf("HistoryClaimReward - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("HistoryClaimReward - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
+
+	if receipt.Status != 1 {
+		log.Printf("HistoryClaimReward - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
+	}
+	log.Printf("HistoryClaimReward - ClaimReward for %s successfully, tx hash : %s", exe.myAddr, tx.Hash())
+	return nil
+}
+
+func (exe *Executor) HistoryDumpReward(earlierSlotStr, laterSlotStr string) (err error) {
+	if earlierSlotStr == "" && laterSlotStr == "" {
+		pr, err := exe.history.PendingRewardsMap(&bind.CallOpts{}, exe.myAddr)
+		if nil != err {
+			log.Printf("HistoryClaimReward - Query PendingRewardsMap for myaddr:%s failed : %s", exe.myAddr, err.Error())
+			return err
+		}
+		cr, err := exe.history.ClaimedRewardsMap(&bind.CallOpts{}, exe.myAddr)
+		if nil != err {
+			log.Printf("HistoryClaimReward - Query ClaimedRewardsMap for myaddr:%s failed : %s", exe.myAddr, err.Error())
+			return err
+		}
+		fmt.Printf("Reward Summay for %s :: Pending Reward %s(ETH), Claimed Reward %s\n", exe.myAddr, util.ToDecimal(pr, 18), util.ToDecimal(cr, 18))
+	} else {
+		tm, err := DaySlotFromStr(earlierSlotStr, 0)
+		if nil != err {
+			log.Printf("HistoryDumpReward - bad earlierSlotStr '%s', err:%s", earlierSlotStr, err.Error())
+			return err
+		}
+		earlier := uint64(tm.Unix())
+
+		tm, err = DaySlotFromStr(laterSlotStr, 0)
+		if nil != err {
+			log.Printf("HistoryDumpReward - bad laterSlotStr '%s', err:%s", laterSlotStr, err.Error())
+			return err
+		}
+		later := uint64(tm.Unix())
+		cr, err := exe.history.CardRewardsMap(&bind.CallOpts{}, earlier, big.NewInt(int64(later)))
+		if nil != err {
+			log.Printf("HistoryDumpReward - CardRewardsMap[%s][%s] failed :%s", earlierSlotStr, laterSlotStr, err.Error())
+			return err
+		}
+		fmt.Printf("Earlier NFT : %s[%d], Later NFT : %s[%d], Card Reward : %s(ETH)\n",
+			earlierSlotStr, earlier, laterSlotStr, later, util.ToDecimal(cr, 18))
+	}
 	return nil
 }
