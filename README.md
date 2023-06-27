@@ -71,7 +71,9 @@ resolve command will resolve a date's vote result once **VoteEndTm expired**.
 
 ## history mintAndAuc [secretarty only]
 mintAndAuc command will mint NFT and issue its auction.
-- go run . history mintAndAuc -d 2023-06-22
+Note:: **don't miss festivals** if it is!
+- go run . history mintAndAuc -d 2023-06-22 -e 端午节
+- go run . history mintAndAuc -d 2023-10-01 -e 国庆节,中秋节
   
 ## history vote
 go run . history vote -d 2023-06-23 -p 0,2,3
