@@ -25,7 +25,8 @@
 * 在秘书通过mintAndAuc创建并发起拍卖之后,NFT在合约内启动了拍卖，拍卖前的NFT所有者是Card合约。  
 * 拍卖方式采用荷兰拍，先到先得。价格从初始拍卖价格每隔1小时降价1%，最低降价到0.01ETH。初始拍卖价格是最近十次成交价的EMA平均价的1.5倍，且不低于0.02ETH(曾经是0.04ETH，已修改)。  
 * 可以在history dump命令中看到初始拍卖价AucInitPrice，最新拍卖价CurPrice，最终成交价FinalPrice。  
-* 通过 history bid命令即可以最新拍卖价竞拍。
+* 通过 history bid命令即可以最新拍卖价竞拍。  
+* 拍卖成功之后，通过card claim命令把NFT从Card合约取回自己帐户。
 
 # 关于奖励
 现在有三部分奖励。
