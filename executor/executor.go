@@ -485,6 +485,21 @@ func (exe *Executor) HistoryVote(daySlotStr string, prefers [3]uint8) (err error
 		return err
 	}
 
+	record, err := exe.history.HistoryMap(&bind.CallOpts{}, uint64(tm.Unix()))
+	if nil != err {
+		log.Printf("HistoryVote - HistoryMap for %s failed : %s", daySlotStr, err.Error())
+		return err
+	}
+	if record.Status != 0 { // must be in _HistoryStatusPrepare = 0;   /* 尚未提交,或者部分提交. 投票完成前都是这个状态 */
+		log.Printf("HistoryVote - HistoryMap for %s status is :%d, invalid", daySlotStr, record.Status)
+		return errors.New("bad record status")
+	}
+
+	if time.Now().Unix() >= int64(record.VoteEndTm) {
+		log.Printf("HistoryVote - slot:%s can not be voted, VoteEndTm:%s timeout", daySlotStr, time.Unix(int64(record.VoteEndTm), 0).Format(time.RFC3339))
+		return errors.New("vote time out")
+	}
+
 	if !CheckAck("This will vote big news in history contract. Are Your Sure?(y/N)\n", 3) {
 		log.Printf("HistoryVote - canceled by user")
 		return errors.New("canceled by user")
