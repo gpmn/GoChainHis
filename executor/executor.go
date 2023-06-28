@@ -1001,6 +1001,11 @@ func (exe *Executor) HistoryDumpReward(earlierSlotStr, laterSlotStr string) (err
 			return err
 		}
 		later := uint64(tm.Unix())
+
+		if earlier > later {
+			log.Printf("HistoryDumpReward - left date slot(%s) should earlier than right date slot(%s), but not so.", earlierSlotStr, laterSlotStr)
+			return errors.New("bad sequence")
+		}
 		cr, err := exe.history.CardRewardsMap(&bind.CallOpts{}, earlier, big.NewInt(int64(later)))
 		if nil != err {
 			log.Printf("HistoryDumpReward - CardRewardsMap[%s][%s] failed :%s", earlierSlotStr, laterSlotStr, err.Error())
