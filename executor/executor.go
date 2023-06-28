@@ -453,7 +453,7 @@ func (exe *Executor) SubmitCandidates(daySlot uint64, candidates []string) (err 
 	opts := &bind.TransactOpts{
 		From:      exe.myAddr,
 		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
-		GasLimit:  GAS_LIMIT,
+		GasLimit:  SUBMIT_GAS_LIMIT,
 		Signer:    exe.signer,
 	}
 
