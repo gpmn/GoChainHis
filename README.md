@@ -52,33 +52,39 @@
 4. escrow和history中的存量资金，可以考虑挂结defi，在安全的前提下实现增值。
 
 # GoChainHis
-ChainHis CLI utils  
 
-cd this project folder, then type "go run ." to execute. Also, it is OK to use 'go install .' to build and install GoChainHis to your $GOPATH/bin/ folder, then use GoChainHis directly.  
+## 下载和安装
+1. 获取源码: git clone https://github.com/gpmn/GoChainHis
+2. cd GoChainHis
+3. go install .
 
+执行go install .之后，会生成GoChainHis可执行文件，后续步骤的"go run ."可以改为GoChainHis。
+
+## 编辑自己的conf.json
 需要先参考conf.json.demo,编辑自己的conf.json文件，只需要修改其中的MyAddr和MyPrivKey。注意::需要确保MyAddr地址**大小写正确**。  
 自己的conf.json要么放在默认的$Home/.GoChainHis/目录下,要么通过--conf参数指定其全路径。  
 
-## escrow deposit
+## 命令列表
+### escrow deposit
 - go run . escrow deposit --amount 0.1
 向抵押合约抵押指定数量的ETH。
 
-## escrow withdraw
+### escrow withdraw
 - go run . escrow withdraw --amount 0.1
 从抵押合约提取指定数量的ETH。
 
-## escrow dump
+### escrow dump
 - go run . escrow dump
 查看本帐号的抵押信息。只有抵押后才能获得投票的票权。  
 票权前30天每天递增1/30，30天后加满。
 
-## history dump
+### history dump
 - go run . history dump -d 2023-06-22
 查看06-22的新闻记录。
 - go run . history dump -d 2023-06-22 -n 2 
 查看06-22和06-23连续两天的新闻记录。
 
-## history submit [secretarty only]
+### history submit [secretarty only]
 - go run . history submit -d 2023-06-23 -s subs/sub.0623.json
 秘书提交某日新闻供社区投票，提交后24小时截止投票。
   
@@ -96,18 +102,18 @@ cd this project folder, then type "go run ." to execute. Also, it is OK to use '
 }
 ```
 
-## history resolve [secretarty only]
+### history resolve [secretarty only]
 - go run . history resolve -d 2023-06-22
 在投票时间结束（超过VoteEndTm）后，秘书结算该日期的新闻和投票信息。
 
-## history mintAndAuc [secretarty only]
+### history mintAndAuc [secretarty only]
 - go run . history mintAndAuc -d 2023-06-22
 - go run . history mintAndAuc -d 2023-06-22 -e 端午节
 - go run . history mintAndAuc -d 2023-10-01 -e 国庆节,中秋节
 
 只有秘书可以执行 mintAndAuc, 用以生成NFT并发起拍卖，需要注意: **不要遗漏-e参数**以指定节日。
   
-## history vote
+### history vote
 * go run . history vote -d 2023-06-23 -p 0,2,3
 
 为2023-06-23的新闻投票。  
@@ -118,29 +124,29 @@ Note::
 3. 投票命中群选结果第一名权重*8; 第二名权重*4; 第三名权重*2; 未命中前三权重*1
 4. 可以用history dump查看待投票日期信息。
 
-## history dumpReward
+### history dumpReward
 * go run . history dumpReward  
 查看汇总的已结算和已提取的分红，此命令查询不到尚未结算的分红。在history dump尾部，如果MyVoteStatus不为0就有资格领取分红，是否领取分红/是否可以领取分红可以在MyVoteReward字段查询到。
 * go run . history dumpReward -l 2023-06-22 -r 2023-06-26
 查看06-22的持卡人从06-26卡拍卖获得的分红
 
-## history settleVote
+### history settleVote
 * go run . history settleVote -d 2023-06-23  
 投票人结算投票分红，奖励结算后可以在history dumpReward中查询到，也可以在history dump尾部查询到。
 
-## history settleCard
+### history settleCard
 * go run . history settleCard -l 2023-06-22 -r 2023-06-26 
 持卡人（持有06-22的卡）去结算06-26的卡拍卖分红，结算后可以在go run . history dumpReward -l 2023-06-22 -r 2023-06-26 查看。
 
-## history settleOps
+### history settleOps
 * go run . history settleOps -d 2023-06-23  
 运维团队结算分红，只有开发团队和秘书可以执行。
 
-## history claimReward
+### history claimReward
 * go run . history claimReward -d 2023-06-23    
 提取分红到自己钱包,参见 history dumpReward
 
-## card claim [bid winner only]
+### card claim [bid winner only]
 * go run . card claim  -d 2023-06-23  
 竞拍成功后(hitory dump的Winner字段)， 买家通过card claim命令，将NFT提取回自己钱包。
 
