@@ -55,62 +55,66 @@ cd this project folder, then type "go run ." to execute. Also, it is OK to use '
 
 ## escrow deposit
 - go run . escrow deposit --amount 0.1
+向抵押合约抵押指定数量的ETH。
 
 ## escrow withdraw
 - go run . escrow withdraw --amount 0.1
+从抵押合约提取指定数量的ETH。
 
 ## escrow dump
 - go run . escrow dump
+查看本帐号的抵押信息。只有抵押后才能获得投票的票权。  
+票权前30天每天递增1/30，30天后加满。
 
 ## history dump
-"-n" param will dump continous date's history infomation.
-
-e.g. :: 
+- go run . history dump -d 2023-06-22
+查看06-22的新闻记录。
 - go run . history dump -d 2023-06-22 -n 2 
-- go run . history dump -d 2023-06-23
+查看06-22和06-23连续两天的新闻记录。
 
 ## history submit [secretarty only]
-submit command will submit candidate news for voters.
-
 - go run . history submit -d 2023-06-23 -s subs/sub.0623.json
+秘书提交某日新闻供社区投票，提交后24小时截止投票。
   
-Note:: 
-1). Date field of sub.0623.json must same as -d params e.g. 2023-06-23  
-2). sub.0623.json should be as the following format:  
+注意:: 
+1). -d参数和sub文件中的日期必须一致
+2). 建议使用<CN></CN> 和 <EN></EN> 标签实现国际化.
+3). sub.0623.json u必须符合如下格式:  
 ```
 {
     "Date": "2023-06-23 UTC",
     "BigNews": [
-        "BTC触及31456$创一年新高",
-        "离岸人民币兑美元跌破7.22日内跌超250点",
-        "美国深海潜水器泰坦内爆,5名乘员死亡",
-        "Coinbase在最高院赢得与美国证交会的诉讼"
+        "<CN><港媒:盒马鲜生最快11月IPO</CN><EN>Hong Kong media: Hema Xiansheng will IPO in November ASAP</EN>",
+        "<CN>离岸人民币兑美元跌破7.22日内跌超250点</CN>",
     ]
 }
 ```
-3). it is suggeust that the content should wrap/segment with <CN></CN> and <EN></EN> tags for internationalize, e.g.:
-```
-    "<CN><港媒:盒马鲜生最快11月IPO</CN><EN>Hong Kong media: Hema Xiansheng will IPO in November ASAP</EN>"
-```
 
 ## history resolve [secretarty only]
-resolve command will resolve a date's vote result once **VoteEndTm expired**.
 - go run . history resolve -d 2023-06-22
+在投票时间结束（超过VoteEndTm）后，秘书结算该日期的新闻和投票信息。
 
 ## history mintAndAuc [secretarty only]
-mintAndAuc command will mint NFT and issue its auction.
-Note:: **don't miss festivals** if it is!
+- go run . history mintAndAuc -d 2023-06-22
 - go run . history mintAndAuc -d 2023-06-22 -e 端午节
 - go run . history mintAndAuc -d 2023-10-01 -e 国庆节,中秋节
+
+只有秘书可以执行 mintAndAuc, 用以生成NFT并发起拍卖，需要注意: **不要遗漏-e参数**以指定节日。
   
 ## history vote
 * go run . history vote -d 2023-06-23 -p 0,2,3
 
-Note:: -p parameter must have 3 indexes which increased from 0 to indicate which news are the prefered big newes of the day, user can use **history dump** comamnd to see the details first.
+为2023-06-23的新闻投票。  
 
-# history dumpReward
+Note:: 
+1. 投票-p参数必须给三个不同的编号，编号针对的是history dump命令中Stories列表的编号 
+2. VoteEndTm截止之后不可投票
+3. 投票命中群选结果第一名权重*8; 第二名权重*4; 第三名权重*2; 未命中前三权重*1
+4. 可以用history dump查看待投票日期信息。
+
+## history dumpReward
 * go run . history dumpReward  
-查看汇总的已结算和已提取的分红，此命令查询不到尚未结算的分红。
+查看汇总的已结算和已提取的分红，此命令查询不到尚未结算的分红。在history dump尾部，如果MyVoteStatus不为0就有资格领取分红，是否领取分红/是否可以领取分红可以在MyVoteReward字段查询到。
 * go run . history dumpReward -l 2023-06-22 -r 2023-06-26
 查看06-22的持卡人从06-26卡拍卖获得的分红
 
