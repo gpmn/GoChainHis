@@ -13,7 +13,7 @@
 # 关于投票
 * 用户需要首先使用 escrow deposit命令质押产生票权， 票权每天增加1/30，30天后票权为质押金额的100%。  
 * 投票必须选择3条新闻的编号，编号从0开始递增，在history vote命令中用“-p 0,2,3”格式的参数提交投票。
-* 需要认真投票
+* 需要认真投票。  
 投票命中最终结果的第一名，获得的分红权重为 票权/3 * 8。  
 投票命中最终结果的第二名，获得的分红权重为 票权/3 * 4。  
 投票命中最终结果的第三名，获得的分红权重为 票权/3 * 2。  
@@ -130,11 +130,13 @@ Note::
 * go run . history settleOps -d 2023-06-23  
 运维团队结算分红，只有开发团队和秘书可以执行。
 
-# history claimReward
+## history claimReward
 * go run . history claimReward -d 2023-06-23    
 提取分红到自己钱包,参见 history dumpReward
 
-
+## card claim [bid winner only]
+* go run . card claim  -d 2023-06-23  
+竞拍成功后(hitory dump的Winner字段)， 买家通过card claim命令，将NFT提取回自己钱包。
 
 
 
