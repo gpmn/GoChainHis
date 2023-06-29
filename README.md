@@ -45,6 +45,12 @@
 * 秘书可以用"card setBaseImage"命令定制某个日期的NFT的背景图，NFT持有人可以向秘书申请定制其背景图。但是定制的主图必须和NFT基础图的风格一致，需要由秘书确保这一点。
 * NFT持有人可以通过card customize定制nft的祝福辞和附图，以及选择主图呈现方式（最后这点需等待chainhis.net网站建设）。
 
+# 后续工作
+1. 实现投票选举秘书功能。
+2. chainhis.net网站建设，支持网页+metamask的主流操作方式。
+3. chainhis.net支持融合图片，把主图/日期/新闻/节日/附图/祝福辞混合在一起呈现，为不同的NFT显示不同的主图，且自动推送到IPFS。nft持有人可以向秘书申请更新主图为推送到IPFS的图片。
+4. escrow和history中的存量资金，可以考虑挂结defi，在安全的前提下实现增值。
+
 # GoChainHis
 ChainHis CLI utils  
 
