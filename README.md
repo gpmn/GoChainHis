@@ -104,8 +104,39 @@ Note:: **don't miss festivals** if it is!
 - go run . history mintAndAuc -d 2023-10-01 -e 国庆节,中秋节
   
 ## history vote
-go run . history vote -d 2023-06-23 -p 0,2,3
+* go run . history vote -d 2023-06-23 -p 0,2,3
 
 Note:: -p parameter must have 3 indexes which increased from 0 to indicate which news are the prefered big newes of the day, user can use **history dump** comamnd to see the details first.
+
+# history dumpReward
+* go run . history dumpReward  
+查看汇总的已结算和已提取的分红，此命令查询不到尚未结算的分红。
+* go run . history dumpReward -l 2023-06-22 -r 2023-06-26
+查看06-22的持卡人从06-26卡拍卖获得的分红
+
+## history settleVote
+* go run . history settleVote -d 2023-06-23  
+投票人结算投票分红，奖励结算后可以在history dumpReward中查询到，也可以在history dump尾部查询到。
+
+## history settleCard
+* go run . history settleCard -l 2023-06-22 -r 2023-06-26 
+持卡人（持有06-22的卡）去结算06-26的卡拍卖分红，结算后可以在go run . history dumpReward -l 2023-06-22 -r 2023-06-26 查看。
+
+## history settleOps
+* go run . history settleOps -d 2023-06-23  
+运维团队结算分红，只有开发团队和秘书可以执行。
+
+# history claimReward
+* go run . history claimReward -d 2023-06-23    
+提取分红到自己钱包,参见 history dumpReward
+
+
+
+
+
+
+
+
+
 
 
