@@ -152,8 +152,8 @@ Note::
 运维团队结算分红，只有开发团队和秘书可以执行。
 
 ### history claimReward
-* go run . history claimReward -d 2023-06-23    
-提取分红到自己钱包,参见 history dumpReward
+* go run . history claimReward    
+提取所有已经settle的分红,参见 history dumpReward
 
 ### card claim [bid winner only]
 * go run . card claim  -d 2023-06-23  
