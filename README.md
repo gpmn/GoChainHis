@@ -75,11 +75,11 @@ history和card还有部分开发工作，暂未开源，预计在三个月内实
 
 ## 命令列表
 ### escrow deposit
-- go run . escrow deposit --amount 0.1
+- go run . escrow deposit --amount 0.1  
 向抵押合约抵押指定数量的ETH。
 
 ### escrow withdraw
-- go run . escrow withdraw --amount 0.1
+- go run . escrow withdraw --amount 0.1  
 从抵押合约提取指定数量的ETH。
 
 ### escrow dump
@@ -88,19 +88,19 @@ history和card还有部分开发工作，暂未开源，预计在三个月内实
 票权前30天每天递增1/30，30天后加满。
 
 ### history dump
-- go run . history dump -d 2023-06-22
+- go run . history dump -d 2023-06-22  
 查看06-22的新闻记录。
-- go run . history dump -d 2023-06-22 -n 2 
+- go run . history dump -d 2023-06-22 -n 2   
 查看06-22和06-23连续两天的新闻记录。
 
 ### history submit [secretarty only]
-- go run . history submit -d 2023-06-23 -s subs/sub.0623.json
+- go run . history submit -d 2023-06-23 -s subs/sub.0623.json  
 秘书提交某日新闻供社区投票，提交后24小时截止投票。
   
 注意:: 
 1. -d参数和sub文件中的日期必须一致  
 2. 建议使用<CN></CN> 和 <EN></EN> 标签实现国际化.  
-3. sub.0623.json u必须符合如下格式:  
+3. sub.0623.json 必须符合如下格式:  
 ```
 {
     "Date": "2023-06-23 UTC",
@@ -112,7 +112,7 @@ history和card还有部分开发工作，暂未开源，预计在三个月内实
 ```
 
 ### history resolve [secretarty only]
-- go run . history resolve -d 2023-06-22
+- go run . history resolve -d 2023-06-22  
 在投票时间结束（超过VoteEndTm）后，秘书结算该日期的新闻和投票信息。
 
 ### history mintAndAuc [secretarty only]
@@ -123,7 +123,7 @@ history和card还有部分开发工作，暂未开源，预计在三个月内实
 只有秘书可以执行 mintAndAuc, 用以生成NFT并发起拍卖，需要注意: **不要遗漏-e参数**以指定节日。
   
 ### history vote
-* go run . history vote -d 2023-06-23 -p 0,2,3
+* go run . history vote -d 2023-06-23 -p 0,2,3  
 
 为2023-06-23的新闻投票。  
 
@@ -136,7 +136,7 @@ Note::
 ### history dumpReward
 * go run . history dumpReward  
 查看汇总的已结算和已提取的分红，此命令查询不到尚未结算的分红。在history dump尾部，如果MyVoteStatus不为0就有资格领取分红，是否领取分红/是否可以领取分红可以在MyVoteReward字段查询到。
-* go run . history dumpReward -l 2023-06-22 -r 2023-06-26
+* go run . history dumpReward -l 2023-06-22 -r 2023-06-26  
 查看06-22的持卡人从06-26卡拍卖获得的分红
 
 ### history settleVote
@@ -144,7 +144,7 @@ Note::
 投票人结算投票分红，奖励结算后可以在history dumpReward中查询到，也可以在history dump尾部查询到。
 
 ### history settleCard
-* go run . history settleCard -l 2023-06-22 -r 2023-06-26 
+* go run . history settleCard -l 2023-06-22 -r 2023-06-26  
 持卡人（持有06-22的卡）去结算06-26的卡拍卖分红，结算后可以在go run . history dumpReward -l 2023-06-22 -r 2023-06-26 查看。
 
 ### history settleOps
