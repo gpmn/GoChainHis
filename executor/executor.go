@@ -10,6 +10,7 @@ import (
 	"log"
 	"math/big"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -1014,5 +1015,58 @@ func (exe *Executor) HistoryDumpReward(earlierSlotStr, laterSlotStr string) (err
 		fmt.Printf("Earlier NFT : %s[%d], Later NFT : %s[%d], Card Reward : %s(ETH)\n",
 			earlierSlotStr, earlier, laterSlotStr, later, util.ToDecimal(cr, 18))
 	}
+	return nil
+}
+
+func (exe *Executor) CardCustomize(daySlotStr string, renderOpt uint8, greeting, greetingImg string) (err error) {
+	tm, err := DaySlotFromStr(daySlotStr, 0)
+	if nil != err {
+		log.Printf("CardCustomize - bad dayslot '%s', err:%s", daySlotStr, err.Error())
+		return err
+	}
+	slot := uint64(tm.Unix())
+
+	addr, err := exe.card.OwnerOf(&bind.CallOpts{}, big.NewInt(int64(slot)))
+	if nil != err {
+		log.Printf("CardCustomize - ownerOf(%s) failed:%s", daySlotStr, err.Error())
+		return err
+	}
+	if strings.ToLower(addr.String()) != strings.ToLower(exe.MyAddr) {
+		log.Printf("CardCustomize - ownerOf(%s) is:%s, not your:%s, abort.", daySlotStr, addr, exe.MyAddr)
+		return errors.New("bad owner")
+	}
+
+	hint := fmt.Sprintf("This will Customize card for %s with renderOpt:[%d] greeting:[%s] greetingImg:[%s]. Are Your Sure?(y/N)\n",
+		daySlotStr, renderOpt, greeting, greetingImg)
+	if !CheckAck(hint, 3) {
+		log.Printf("CardClaim - canceled by user")
+		return errors.New("canceled by user")
+	}
+
+	opts := &bind.TransactOpts{
+		From:      exe.myAddr,
+		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasLimit:  GAS_LIMIT,
+		Signer:    exe.signer,
+	}
+
+	tx, err := exe.card.Customize(opts, slot, renderOpt, greeting, greetingImg)
+	if nil != err {
+		log.Printf("CardCustomize - ClaimReward failed, err:%s", err.Error())
+		return err
+	}
+	log.Printf("CardCustomize - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("CardCustomize - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
+
+	if receipt.Status != 1 {
+		log.Printf("CardCustomize - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
+	}
+	log.Printf("CardCustomize - ClaimReward for %s successfully, tx hash : %s", exe.myAddr, tx.Hash())
 	return nil
 }

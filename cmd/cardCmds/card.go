@@ -1,6 +1,5 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
 package cardCmds
 
@@ -9,6 +8,9 @@ import (
 )
 
 var argDaySlots []string
+var argRenderOpt uint8
+var argGreeting string
+var argGreetingImg string
 
 // cardCmd represents the card command
 var CardCmd = &cobra.Command{
@@ -36,4 +38,9 @@ func init() {
 	// is called directly, e.g.:
 	// cardCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	CardCmd.PersistentFlags().StringSliceVarP(&argDaySlots, "dayslot", "d", nil, "the day to be displayed, can be unix sec of the day, or string of '2023-08-08'")
+	CardCmd.AddCommand(CustomizeCmd)
+	CustomizeCmd.Flags().Uint8VarP(&argRenderOpt, "render", "r", 0, "specify renderOpt for your NFT. 0:show image of the day. 1:show common base image. 2:show combo image from chainhis.net. others: same as 0.")
+	CustomizeCmd.Flags().StringVarP(&argGreeting, "greet", "g", "", "greeting message of the NFT.")
+	CustomizeCmd.Flags().StringVarP(&argGreetingImg, "image", "i", "", "greeting image of the NFT, e.g. ipfs://QmbWu8kkUZ4i5rgCftFJPVGfhrCmbQ7F5LS4VArNyMTb7x/D2.png, or https://ipfs.io/ipfs/QmYCr6dokRW2QQSp6xVRJrMQz2HJuF2ESE5SEozi9BZmzF")
+
 }
