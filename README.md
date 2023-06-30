@@ -141,7 +141,7 @@ Note::
 
 ### history settleVote
 * go run . history settleVote -d 2023-06-23  
-投票人结算投票分红，奖励结算后可以在history dumpReward中查询到，也可以在history dump尾部查询到。
+投票人结算投票分红，奖励结算后可以在history dumpReward中查询到汇总信息，也可以在history dump尾部查询到每日投票的明细数据。
 
 ### history settleCard
 * go run . history settleCard -l 2023-06-22 -r 2023-06-26  
