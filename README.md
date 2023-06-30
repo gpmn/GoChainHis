@@ -35,6 +35,7 @@ history和card还有部分开发工作，暂未开源，预计在三个月内实
 * 可以在history dump命令中看到初始拍卖价AucInitPrice，最新拍卖价CurPrice，最终成交价FinalPrice。  
 * 通过 history bid命令即可以最新拍卖价竞拍。  
 * 拍卖成功之后，通过card claim命令把NFT从Card合约取回自己帐户。
+* 再次强调，请大家**理性参与**，竞拍环节不要投入过多！
 
 # 关于奖励
 现在有三部分奖励。
