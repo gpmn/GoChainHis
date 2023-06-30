@@ -160,7 +160,8 @@ Note::
 竞拍成功后(hitory dump的Winner字段)， 买家通过card claim命令，将NFT提取回自己钱包。
 
 ### card customize [NFT owner only]
-* go run . card customize -d 2023-06-22 -r 0 -g "庆祝链史项目启动！希望大家理性参与！希望链史项目能长期运作！希望链史项目能够为人类真实记录下每一天！"  -i "https://ipfs.io/ipfs/Qmd5yq6Qtkr6xshHzWXXRSPaboq1LounKxogVDMPMCKRAY"
+* go run . card customize -d 2023-06-22 -r 0 -g "庆祝链史项目启动！希望大家理性参与！希望链史项目能长期运作！希望链史项目能够为人类真实记录下每一天！"  -i "https://ipfs.io/ipfs/Qmd5yq6Qtkr6xshHzWXXRSPaboq1LounKxogVDMPMCKRAY"  
+
 定制NFT主图呈现方式，自定的祝福辞和附图。
 
 
