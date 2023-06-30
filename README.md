@@ -106,7 +106,7 @@ history和card还有部分开发工作，暂未开源，预计在三个月内实
     "Date": "2023-06-23 UTC",
     "BigNews": [
         "<CN><港媒:盒马鲜生最快11月IPO</CN><EN>Hong Kong media: Hema Xiansheng will IPO in November ASAP</EN>",
-        "<CN>离岸人民币兑美元跌破7.22日内跌超250点</CN>",
+        "<CN>离岸人民币兑美元跌破7.22日内跌超250点</CN>"
     ]
 }
 ```
