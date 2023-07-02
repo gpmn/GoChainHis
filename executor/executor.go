@@ -84,7 +84,7 @@ func CheckAck(hint string, extraWaitSec int) (passed bool) {
 
 func DaySlotFromStr(daySlotStr string, offset int) (tm time.Time, err error) {
 	tm, err1 := time.Parse("2006-01-02 UTC", daySlotStr+" UTC")
-	if nil != err {
+	if nil != err1 {
 		sec, err2 := strconv.ParseInt(daySlotStr, 10, 64)
 		if err2 != nil {
 			log.Printf("DaySlotFromStr - '%s' can not interpret as date:%s. also can not interpret as integer:%s.",
