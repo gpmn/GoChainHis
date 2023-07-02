@@ -15,6 +15,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 
@@ -1039,7 +1040,7 @@ func (exe *Executor) CardCustomize(daySlotStr string, renderOpt uint8, greeting,
 	hint := fmt.Sprintf("This will Customize card for %s with renderOpt:[%d] greeting:[%s] greetingImg:[%s]. Are Your Sure?(y/N)\n",
 		daySlotStr, renderOpt, greeting, greetingImg)
 	if !CheckAck(hint, 3) {
-		log.Printf("CardClaim - canceled by user")
+		log.Printf("CardCustomize - canceled by user")
 		return errors.New("canceled by user")
 	}
 
@@ -1067,6 +1068,59 @@ func (exe *Executor) CardCustomize(daySlotStr string, renderOpt uint8, greeting,
 		log.Printf("CardCustomize - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
 		return errors.New("failed status")
 	}
-	log.Printf("CardCustomize - ClaimReward for %s successfully, tx hash : %s", exe.myAddr, tx.Hash())
+	log.Printf("CardCustomize - Customize for %s successfully, tx hash : %s", exe.myAddr, tx.Hash())
+	return nil
+}
+
+func (exe *Executor) CardSetBaseImg(daySlotStr string, baseImg string) (err error) {
+	var slot uint64
+	if daySlotStr != "" {
+
+		tm, err := DaySlotFromStr(daySlotStr, 0)
+		if nil != err {
+			log.Printf("CardSetBaseImg - bad dayslot '%s', err:%s", daySlotStr, err.Error())
+			return err
+		}
+		slot = uint64(tm.Unix())
+	}
+
+	hint := fmt.Sprintf("This will set base image for all or for just one NFT, only dev team or secretary allowed. Are Your Sure?(y/N)\n")
+	if !CheckAck(hint, 3) {
+		log.Printf("CardSetBaseImg - canceled by user")
+		return errors.New("canceled by user")
+	}
+
+	opts := &bind.TransactOpts{
+		From:      exe.myAddr,
+		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasLimit:  GAS_LIMIT,
+		Signer:    exe.signer,
+	}
+
+	// var types.TransactionReceipt
+	var tx *types.Transaction
+	if slot == 0 {
+		tx, err = exe.card.SetBaseImg(opts, baseImg)
+	} else {
+		tx, err = exe.card.SetBaseImg0(opts, slot, baseImg)
+	}
+
+	if nil != err {
+		log.Printf("CardSetBaseImg - SetBaseImg failed, err:%s", err.Error())
+		return err
+	}
+	log.Printf("CardSetBaseImg - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("CardSetBaseImg - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
+
+	if receipt.Status != 1 {
+		log.Printf("CardSetBaseImg - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
+	}
+	log.Printf("CardSetBaseImg - SetBaseImg for %s successfully, tx hash : %s", exe.myAddr, tx.Hash())
 	return nil
 }
