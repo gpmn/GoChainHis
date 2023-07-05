@@ -27,7 +27,7 @@ history和card还有部分开发工作，暂未开源，预计在三个月内实
 投票命中最终结果的第三名，获得的分红权重为 票权/3 * 2。  
 其他情况获得的分红权重为 票权/3 * 1。  
 这一设计是希望投票人认真的选择。
-* 投票之后，可以用history settleVote结算分红，可以一次性把多次结算的分红通过history claim一次性提取到自己帐号(提取的奖励包括投票奖励以及NFT持有人奖励)。
+* 投票之后，可以用history settleVote结算分红，可以把多次结算的分红通过history claim一次性提取到自己帐号(提取的奖励包括投票奖励以及NFT持有人奖励)。
 
 # 关于拍卖
 * 在秘书通过mintAndAuc创建并发起拍卖之后,NFT在合约内启动了拍卖，拍卖前的NFT所有者是Card合约。  
@@ -120,7 +120,9 @@ history和card还有部分开发工作，暂未开源，预计在三个月内实
 - go run . history mintAndAuc -d 2023-06-22 -e 端午节
 - go run . history mintAndAuc -d 2023-10-01 -e 国庆节,中秋节
 
-只有秘书可以执行 mintAndAuc, 用以生成NFT并发起拍卖，需要注意: **不要遗漏-e参数**以指定节日。
+只有秘书可以执行 mintAndAuc, 用以生成NFT并发起拍卖。需要注意:
+* **不要遗漏-e参数**以指定节日。
+* **无需记录二十四节气**，节气基本固定，可以计算而来。
   
 ### history vote
 * go run . history vote -d 2023-06-23 -p 0,2,3  
