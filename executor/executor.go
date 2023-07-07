@@ -912,7 +912,7 @@ func (exe *Executor) CardClaim(daySlotStr string) (err error) {
 
 	tx, err := exe.card.Claim(opts, slot)
 	if nil != err {
-		log.Printf("CardClaim - MintAndAuction failed, err:%s", err.Error())
+		log.Printf("CardClaim - Claim failed, err:%s", err.Error())
 		return err
 	}
 	log.Printf("CardClaim - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
@@ -927,7 +927,7 @@ func (exe *Executor) CardClaim(daySlotStr string) (err error) {
 		log.Printf("CardClaim - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
 		return errors.New("failed status")
 	}
-	log.Printf("CardClaim - MintAndAuction for %s successfully, tx hash : %s", daySlotStr, tx.Hash())
+	log.Printf("CardClaim - Claim for %s successfully, tx hash : %s", daySlotStr, tx.Hash())
 	return nil
 }
 
