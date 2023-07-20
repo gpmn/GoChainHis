@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"regexp"
 	"strings"
 	"time"
 
@@ -50,6 +51,15 @@ type UTCTime time.Time
 type CandidateDef struct {
 	Date    UTCTime // Must has a suffix of 'UTC'
 	BigNews []string
+}
+
+func checkNews(news string) (valid bool) {
+	valid, err := regexp.MatchString(`^<CN>.+</CN><EN>.+</EN>$`, news)
+	if err != nil {
+		log.Printf("checkNews - MatchString failed : %s", err.Error())
+		return false
+	}
+	return valid
 }
 
 // submitCmd represents the submit command
@@ -94,6 +104,12 @@ type CandidateDef struct {
 		if len(cdf.BigNews) < 3 {
 			log.Printf("SubmitCmd - at least 3 big news in file '%s'.", subFile)
 			os.Exit(1)
+		}
+		for idx, news := range cdf.BigNews {
+			if !checkNews(news) {
+				log.Printf("SubmitCmd - news[%d]:%s is not a valid news item :", idx, news)
+				os.Exit(1)
+			}
 		}
 		if len(argDaySlots) != 1 {
 			log.Printf("SubmitCmd - need one -d/--dayslot args in command line.")
