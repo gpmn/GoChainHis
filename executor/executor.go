@@ -733,6 +733,10 @@ func (exe *Executor) HistoryResolve(daySlotStr string) (err error) {
 		log.Printf("HistoryResolve - HistoryMap for %s failed : %s", daySlotStr, err.Error())
 		return err
 	}
+	if time.Now().Unix() < int64(record.VoteEndTm) {
+		log.Printf("HistoryResolve - still in voting, vote end time : %s", time.Unix(int64(record.VoteEndTm), 0).Format(util.FavoredTimeFormat))
+		return errors.New("still in voting")
+	}
 	if record.Status != 0 { // must be in _HistoryStatusPrepare=0 status
 		log.Printf("HistoryResolve - HistoryMap for %s status is :%d, invalid", daySlotStr, record.Status)
 		return errors.New("bad record status")
