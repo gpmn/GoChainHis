@@ -105,6 +105,10 @@ type CandidateDef struct {
 			log.Printf("SubmitCmd - at least 3 big news in file '%s'.", subFile)
 			os.Exit(1)
 		}
+		if len(cdf.BigNews) > 10 {
+			log.Printf("SubmitCmd - there're %d news which are more than the limitation, 10 news at most.", len(cdf.BigNews))
+			os.Exit(1)
+		}
 		for idx, news := range cdf.BigNews {
 			if !checkNews(news) {
 				log.Printf("SubmitCmd - news[%d]:%s is not a valid news item :", idx, news)
