@@ -215,7 +215,7 @@ Are Your Sure?(y/N)`,
 	opts := &bind.TransactOpts{
 		From:      exe.myAddr,
 		Value:     util.ToWei(amount, 18),
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasTipCap: big.NewInt(GAS_TIP),
 		GasLimit:  GAS_LIMIT,
 		Signer:    exe.signer,
 	}
@@ -243,7 +243,7 @@ Are Your Sure?(y/N)`,
 
 	opts := &bind.TransactOpts{
 		From:      exe.myAddr,
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasTipCap: big.NewInt(GAS_TIP),
 		GasLimit:  GAS_LIMIT,
 		Signer:    exe.signer,
 	}
@@ -453,10 +453,10 @@ func (exe *Executor) SubmitCandidates(daySlot uint64, candidates []string) (err 
 		return errors.New("canceled by user")
 	}
 	opts := &bind.TransactOpts{
-		From: exe.myAddr,
-		//GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
-		GasLimit: SUBMIT_GAS_LIMIT,
-		Signer:   exe.signer,
+		From:      exe.myAddr,
+		GasTipCap: big.NewInt(GAS_TIP),
+		GasLimit:  SUBMIT_GAS_LIMIT,
+		Signer:    exe.signer,
 	}
 
 	tx, err := exe.history.SubmitCandidates(opts, daySlot, candidates)
@@ -508,7 +508,7 @@ func (exe *Executor) HistoryVote(daySlotStr string, prefers [3]uint8) (err error
 	}
 	opts := &bind.TransactOpts{
 		From:      exe.myAddr,
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasTipCap: big.NewInt(GAS_TIP),
 		GasLimit:  GAS_LIMIT,
 		Signer:    exe.signer,
 	}
@@ -564,7 +564,7 @@ func (exe *Executor) HistorySettleVoterReward(daySlots []string) (err error) {
 	}
 	opts := &bind.TransactOpts{
 		From:      exe.myAddr,
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasTipCap: big.NewInt(GAS_TIP),
 		GasLimit:  GAS_LIMIT,
 		Signer:    exe.signer,
 	}
@@ -626,7 +626,7 @@ func (exe *Executor) HistorySettleOpsReward(daySlots []string) (err error) {
 	}
 	opts := &bind.TransactOpts{
 		From:      exe.myAddr,
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasTipCap: big.NewInt(GAS_TIP),
 		GasLimit:  GAS_LIMIT,
 		Signer:    exe.signer,
 	}
@@ -694,7 +694,7 @@ func (exe *Executor) HistorySettleCardReward(daySlot string, rightSlots []string
 	}
 	opts := &bind.TransactOpts{
 		From:      exe.myAddr,
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasTipCap: big.NewInt(GAS_TIP),
 		GasLimit:  GAS_LIMIT,
 		Signer:    exe.signer,
 	}
@@ -748,10 +748,10 @@ func (exe *Executor) HistoryResolve(daySlotStr string) (err error) {
 		return errors.New("canceled by user")
 	}
 	opts := &bind.TransactOpts{
-		From: exe.myAddr,
-		//GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
-		GasLimit: GAS_LIMIT,
-		Signer:   exe.signer,
+		From:      exe.myAddr,
+		GasTipCap: big.NewInt(GAS_TIP),
+		GasLimit:  GAS_LIMIT,
+		Signer:    exe.signer,
 	}
 
 	tx, err := exe.history.Resolve(opts, slot)
@@ -801,7 +801,7 @@ func (exe *Executor) HistoryBid(daySlotStr string) (err error) {
 	}
 	opts := &bind.TransactOpts{
 		From:      exe.myAddr,
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasTipCap: big.NewInt(GAS_TIP),
 		GasLimit:  GAS_LIMIT,
 		Signer:    exe.signer,
 		Value:     qcp.CurPrice,
@@ -857,10 +857,10 @@ func (exe *Executor) HistoryMintAndAuction(daySlotStr string, festivals []string
 		return errors.New("canceled by user")
 	}
 	opts := &bind.TransactOpts{
-		From: exe.myAddr,
-		//GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
-		GasLimit: GAS_LIMIT,
-		Signer:   exe.signer,
+		From:      exe.myAddr,
+		GasTipCap: big.NewInt(GAS_TIP),
+		GasLimit:  GAS_LIMIT,
+		Signer:    exe.signer,
 	}
 
 	tx, err := exe.history.MintAndAuction(opts, slot, festivals)
@@ -909,7 +909,7 @@ func (exe *Executor) CardClaim(daySlotStr string) (err error) {
 	}
 	opts := &bind.TransactOpts{
 		From:      exe.myAddr,
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasTipCap: big.NewInt(GAS_TIP),
 		GasLimit:  GAS_LIMIT,
 		Signer:    exe.signer,
 	}
@@ -954,7 +954,7 @@ func (exe *Executor) HistoryClaimReward() (err error) {
 	}
 	opts := &bind.TransactOpts{
 		From:      exe.myAddr,
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasTipCap: big.NewInt(GAS_TIP),
 		GasLimit:  GAS_LIMIT,
 		Signer:    exe.signer,
 	}
@@ -1050,7 +1050,7 @@ func (exe *Executor) CardCustomize(daySlotStr string, renderOpt uint8, greeting,
 
 	opts := &bind.TransactOpts{
 		From:      exe.myAddr,
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasTipCap: big.NewInt(GAS_TIP),
 		GasLimit:  GAS_LIMIT,
 		Signer:    exe.signer,
 	}
@@ -1096,7 +1096,7 @@ func (exe *Executor) CardSetBaseImg(daySlotStr string, baseImg string) (err erro
 
 	opts := &bind.TransactOpts{
 		From:      exe.myAddr,
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasTipCap: big.NewInt(GAS_TIP),
 		GasLimit:  GAS_LIMIT,
 		Signer:    exe.signer,
 	}
