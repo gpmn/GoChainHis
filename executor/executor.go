@@ -453,10 +453,10 @@ func (exe *Executor) SubmitCandidates(daySlot uint64, candidates []string) (err 
 		return errors.New("canceled by user")
 	}
 	opts := &bind.TransactOpts{
-		From:      exe.myAddr,
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
-		GasLimit:  SUBMIT_GAS_LIMIT,
-		Signer:    exe.signer,
+		From: exe.myAddr,
+		//GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasLimit: SUBMIT_GAS_LIMIT,
+		Signer:   exe.signer,
 	}
 
 	tx, err := exe.history.SubmitCandidates(opts, daySlot, candidates)
@@ -748,10 +748,10 @@ func (exe *Executor) HistoryResolve(daySlotStr string) (err error) {
 		return errors.New("canceled by user")
 	}
 	opts := &bind.TransactOpts{
-		From:      exe.myAddr,
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
-		GasLimit:  GAS_LIMIT,
-		Signer:    exe.signer,
+		From: exe.myAddr,
+		//GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasLimit: GAS_LIMIT,
+		Signer:   exe.signer,
 	}
 
 	tx, err := exe.history.Resolve(opts, slot)
@@ -857,10 +857,10 @@ func (exe *Executor) HistoryMintAndAuction(daySlotStr string, festivals []string
 		return errors.New("canceled by user")
 	}
 	opts := &bind.TransactOpts{
-		From:      exe.myAddr,
-		GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
-		GasLimit:  GAS_LIMIT,
-		Signer:    exe.signer,
+		From: exe.myAddr,
+		//GasTipCap: big.NewInt(GAS_TIP_IN_GWEI),
+		GasLimit: GAS_LIMIT,
+		Signer:   exe.signer,
 	}
 
 	tx, err := exe.history.MintAndAuction(opts, slot, festivals)
