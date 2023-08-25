@@ -311,7 +311,6 @@ func (exe *Executor) HistoryDump(daySlotStr string, offset int) (err error) {
 			log.Printf("HistoryDump - daySlotStr:'%s' => %s QueryCurPrice failed:%s", daySlotStr, tmpTm.Format(util.FavoredTimeFormat),
 				err.Error())
 		}
-		log.Printf("------------- 最新价:%s(eth) Status:%d", util.ToDecimal(curPrice, 18), record.Status)
 		if record.Status == 3 {
 			bidInfo = fmt.Sprintf("最新价:%s(eth) Status:%d 已拍卖", util.ToDecimal(curPrice, 18), record.Status)
 		} else {
