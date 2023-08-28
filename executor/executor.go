@@ -1023,7 +1023,7 @@ func (exe *Executor) HistoryDumpReward(earlierSlotStr, laterSlotStr string) (err
 	return nil
 }
 
-func (exe *Executor) CardCustomize(daySlotStr string, renderOpt uint8, greeting, greetingImg string) (err error) {
+func (exe *Executor) CardCustomize(daySlotStr string, greeting, greetingImg string) (err error) {
 	tm, err := DaySlotFromStr(daySlotStr, 0)
 	if nil != err {
 		log.Printf("CardCustomize - bad dayslot '%s', err:%s", daySlotStr, err.Error())
@@ -1041,8 +1041,8 @@ func (exe *Executor) CardCustomize(daySlotStr string, renderOpt uint8, greeting,
 		return errors.New("bad owner")
 	}
 
-	hint := fmt.Sprintf("This will Customize card for %s with renderOpt:[%d] greeting:[%s] greetingImg:[%s]. Are Your Sure?(y/N)\n",
-		daySlotStr, renderOpt, greeting, greetingImg)
+	hint := fmt.Sprintf("This will Customize card for %s with greeting:[%s] greetingImg:[%s]. Are Your Sure?(y/N)\n",
+		daySlotStr, greeting, greetingImg)
 	if !CheckAck(hint, 3) {
 		log.Printf("CardCustomize - canceled by user")
 		return errors.New("canceled by user")
@@ -1055,7 +1055,7 @@ func (exe *Executor) CardCustomize(daySlotStr string, renderOpt uint8, greeting,
 		Signer:    exe.signer,
 	}
 
-	tx, err := exe.card.Customize(opts, slot, renderOpt, greeting, greetingImg)
+	tx, err := exe.card.Customize(opts, slot, greeting, greetingImg)
 	if nil != err {
 		log.Printf("CardCustomize - ClaimReward failed, err:%s", err.Error())
 		return err
@@ -1126,5 +1126,61 @@ func (exe *Executor) CardSetBaseImg(daySlotStr string, baseImg string) (err erro
 		return errors.New("failed status")
 	}
 	log.Printf("CardSetBaseImg - SetBaseImg for %s successfully, tx hash : %s", exe.myAddr, tx.Hash())
+	return nil
+}
+
+func (exe *Executor) HistorySubmitErrata(daySlotStr string, storyIdx uint8, oldContent, newContent, reason string) (err error) {
+	tmpTm, err := DaySlotFromStr(daySlotStr, 0)
+	if nil != err {
+		log.Printf("HistoryDump - DaySlotFromStr(%s, 0) failed : %s", daySlotStr, err.Error())
+		return err
+	}
+	unixSec := tmpTm.Unix()
+
+	storyCnt, err := exe.history.GetHisRecStoriesCnt(&bind.CallOpts{}, uint64(unixSec))
+	if nil != err {
+		log.Printf("HistoryDump - daySlotStr:'%s' => %s GetHisRecStoriesCnt failed:%s", daySlotStr, tmpTm.Format(util.FavoredTimeFormat),
+			err.Error())
+		return err
+	}
+
+	if uint64(storyIdx) >= storyCnt {
+		log.Printf("HistoryDump - daySlotStr:'%s' => %s storyIdx:%d, but storyCnt:%d, out of range", daySlotStr, tmpTm.Format(util.FavoredTimeFormat),
+			storyIdx, storyCnt)
+		return errors.New("storyIdx out of range")
+	}
+
+	story, err := exe.history.GetHisRecStoryAt(&bind.CallOpts{}, uint64(unixSec), storyIdx)
+	if story.Content != oldContent {
+		log.Printf("exe.HistorySubmitErrata - daySlotStr:'%s' => %s oldContent not same as chain's record, please check the storyIdx and oldContent param", daySlotStr, tmpTm.Format(util.FavoredTimeFormat))
+		log.Printf("exe.HistorySubmitErrata - oldContent                     :%s", oldContent)
+		log.Printf("exe.HistorySubmitErrata - on chain content for story[%d] :%s", story.Content)
+	}
+
+	opts := &bind.TransactOpts{
+		From:      exe.myAddr,
+		GasTipCap: big.NewInt(GAS_TIP),
+		GasLimit:  GAS_LIMIT,
+		Signer:    exe.signer,
+	}
+
+	tx, err := exe.history.SubmitErrata(opts, uint64(unixSec), storyIdx, newContent, reason)
+	if nil != err {
+		log.Printf("HistorySubmitErrata - SubmitErrata failed, err:%s", err.Error())
+		return err
+	}
+	log.Printf("HistorySubmitErrata - TX %s executed, wait 3 seconds for the receipt ...", tx.Hash())
+	time.Sleep(time.Second * 3)
+	receipt, err := exe.client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Printf("HistorySubmitErrata - TransactionReceipt %s failed:%s", tx.Hash(), err.Error())
+		return err
+	}
+
+	if receipt.Status != 1 {
+		log.Printf("HistorySubmitErrata - tx %s operation status %d, error log:%v, failed!", tx.Hash(), receipt.Status, receipt.Logs)
+		return errors.New("failed status")
+	}
+	log.Printf("HistorySubmitErrata - SubmitErrata for %s successfully, tx hash : %s", exe.myAddr, tx.Hash())
 	return nil
 }

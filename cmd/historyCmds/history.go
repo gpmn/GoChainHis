@@ -40,6 +40,7 @@ func init() {
 	HistoryCmd.AddCommand(BidCmd)
 	HistoryCmd.AddCommand(ClaimRewardCmd)
 	HistoryCmd.AddCommand(DumpRewardCmd)
+	HistoryCmd.AddCommand(SubmitErrataCmd)
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
@@ -56,4 +57,9 @@ func init() {
 	VoteCmd.Flags().IntSliceVarP(&argPrefers, "prefers", "p", []int{}, "prefered big news index, must three items, e.a. : 0,1,2")
 	DumpCmd.Flags().IntVarP(&argDumpCnt, "count", "n", 1, "dump continuos count since specified daySlot.")
 	MintAndAucCmd.Flags().StringSliceVarP(&argFestivals, "festivals", "e", nil, "Mint NFT and issue auction, with specified festivals")
+
+	SubmitErrataCmd.Flags().Uint8VarP(&_ArgStoryIdx, "storyIdx", "", 255, "storyIdx of the story to be fixed")
+	SubmitErrataCmd.Flags().StringVarP(&_ArgOldContent, "oldContent", "", "", "old content of the story to be fixed")
+	SubmitErrataCmd.Flags().StringVarP(&_ArgNewContent, "newContent", "", "", "new content of the story to be fixed")
+	SubmitErrataCmd.Flags().StringVarP(&_ArgReason, "reason", "", "", "new content of the story to be fixed")
 }

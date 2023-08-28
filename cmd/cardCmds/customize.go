@@ -27,7 +27,7 @@ to quickly create a Cobra application.`,
 			log.Printf("BidCmd - just one --dayslot/-d param is required, e.g. '-d=2023-08-08'.")
 			os.Exit(1)
 		}
-		executor.GetExecutor().CardCustomize(argDaySlots[0], argRenderOpt, argGreeting, argGreetingImg)
+		executor.GetExecutor().CardCustomize(argDaySlots[0], argGreeting, argGreetingImg)
 	},
 }
 

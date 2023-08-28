@@ -30,7 +30,7 @@ var (
 
 // HistoryMetaData contains all meta data concerning the History contract.
 var HistoryMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"previousAdmin\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"newAdmin\",\"type\":\"address\"}],\"name\":\"AdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"beacon\",\"type\":\"address\"}],\"name\":\"BeaconUpgraded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint8\",\"name\":\"version\",\"type\":\"uint8\"}],\"name\":\"Initialized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"NewCard\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Paused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Unpaused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"implementation\",\"type\":\"address\"}],\"name\":\"Upgraded\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"Bid\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"CardAddr\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"CardRewardsMap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ClaimReward\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"ClaimedRewardsMap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"Echo\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"EscrowAddr\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"GetBigStories\",\"outputs\":[{\"internalType\":\"uint8[3]\",\"name\":\"bis\",\"type\":\"uint8[3]\"},{\"internalType\":\"string[3]\",\"name\":\"content\",\"type\":\"string[3]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"GetHisRecBigIdxs\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"id0\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"id1\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"id2\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"GetHisRecStoriesCnt\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"cnt\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"},{\"internalType\":\"uint8\",\"name\":\"storyIdx\",\"type\":\"uint8\"}],\"name\":\"GetHisRecStoryAt\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"rsvWeight\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"voteSum\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"content\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"GetStatusOf\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"status\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"},{\"internalType\":\"address\",\"name\":\"voter\",\"type\":\"address\"}],\"name\":\"GetVoteInfo\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"prefer0\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"prefer1\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"prefer2\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"voteAmt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"GetWinnerOf\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"winner\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"HistoryMap\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"Status\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"ShareOfDev\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"ShareOfSecretary\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"ShareOfCards\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"ShareOfVoters\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"VoterCnt\",\"type\":\"uint32\"},{\"internalType\":\"uint64\",\"name\":\"VoteEndTm\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"AucInitTm\",\"type\":\"uint64\"},{\"internalType\":\"uint256\",\"name\":\"AucInitPrice\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"FinalPrice\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"VoteSum\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"WeightedVoteSum\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"Winner\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"MAAuctionPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"},{\"internalType\":\"string[]\",\"name\":\"festivals\",\"type\":\"string[]\"}],\"name\":\"MintAndAuction\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"OpsRewardsMap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"PendingRewardsMap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"tokenId\",\"type\":\"uint64\"}],\"name\":\"QueryCurPrice\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"hisStatus\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"curPrice\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"Resolve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"escAddr\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"cardAddr\",\"type\":\"address\"}],\"name\":\"SetAddrs\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"SetSecretary\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"mySlot\",\"type\":\"uint64\"},{\"internalType\":\"uint64[]\",\"name\":\"otherSlots\",\"type\":\"uint64[]\"}],\"name\":\"SettleCardReward\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64[]\",\"name\":\"slots\",\"type\":\"uint64[]\"}],\"name\":\"SettleOpsReward\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64[]\",\"name\":\"daySlots\",\"type\":\"uint64[]\"}],\"name\":\"SettleVoteReward\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"},{\"internalType\":\"string[]\",\"name\":\"candidates\",\"type\":\"string[]\"}],\"name\":\"SubmitCandidates\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"},{\"internalType\":\"uint8[3]\",\"name\":\"prefers\",\"type\":\"uint8[3]\"}],\"name\":\"Vote\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"VoteInfoMap\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"Status\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"VoteAmt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"Reward\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"paused\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"proxiableUUID\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"secretary\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"unpause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newImplementation\",\"type\":\"address\"}],\"name\":\"upgradeTo\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newImplementation\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"upgradeToAndCall\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"previousAdmin\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"newAdmin\",\"type\":\"address\"}],\"name\":\"AdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"beacon\",\"type\":\"address\"}],\"name\":\"BeaconUpgraded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"mySlot\",\"type\":\"uint64\"},{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"otherSlot\",\"type\":\"uint64\"}],\"name\":\"CardRewardUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"HisRecordUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint8\",\"name\":\"version\",\"type\":\"uint8\"}],\"name\":\"Initialized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"},{\"indexed\":false,\"internalType\":\"uint8\",\"name\":\"idx\",\"type\":\"uint8\"}],\"name\":\"NewErrata\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Paused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Unpaused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"implementation\",\"type\":\"address\"}],\"name\":\"Upgraded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"VoteInfoUpdated\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"Bid\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"CardAddr\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"CardRewardsMap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ClaimReward\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"ClaimedRewardsMap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"Echo\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"EscrowAddr\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"GetBigStories\",\"outputs\":[{\"internalType\":\"uint8[3]\",\"name\":\"bis\",\"type\":\"uint8[3]\"},{\"internalType\":\"string[3]\",\"name\":\"content\",\"type\":\"string[3]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"idx\",\"type\":\"uint256\"}],\"name\":\"GetErrataAt\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"updateBlk\",\"type\":\"uint64\"},{\"internalType\":\"uint8\",\"name\":\"storyIdx\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"oldStory\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"reason\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"GetErrataLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"cnt\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"GetHisRecBigIdxs\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"id0\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"id1\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"id2\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"GetHisRecStoriesCnt\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"cnt\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"},{\"internalType\":\"uint8\",\"name\":\"storyIdx\",\"type\":\"uint8\"}],\"name\":\"GetHisRecStoryAt\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"rsvWeight\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"voteSum\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"content\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"GetStatusOf\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"status\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"},{\"internalType\":\"address\",\"name\":\"voter\",\"type\":\"address\"}],\"name\":\"GetVoteInfo\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"prefer0\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"prefer1\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"prefer2\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"voteAmt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"GetWinnerOf\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"winner\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"HistoryMap\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"Status\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"ShareOfDev\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"ShareOfSecretary\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"ShareOfCards\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"ShareOfVoters\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"VoterCnt\",\"type\":\"uint32\"},{\"internalType\":\"uint64\",\"name\":\"VoteEndTm\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"AucInitTm\",\"type\":\"uint64\"},{\"internalType\":\"uint256\",\"name\":\"AucInitPrice\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"FinalPrice\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"VoteSum\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"WeightedVoteSum\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"Winner\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"MAAuctionPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"},{\"internalType\":\"string[]\",\"name\":\"festivals\",\"type\":\"string[]\"}],\"name\":\"MintAndAuction\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"OpsRewardsMap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"PendingRewardsMap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"mySlot\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"otherSlot\",\"type\":\"uint64\"}],\"name\":\"PreviewCardReward\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"resReward\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"slot\",\"type\":\"uint64\"}],\"name\":\"PreviewOpsReward\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"resReward\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"slot\",\"type\":\"uint64\"},{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"PreviewVoteReward\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"resRewards\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"tokenId\",\"type\":\"uint64\"}],\"name\":\"QueryCurPrice\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"hisStatus\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"curPrice\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"}],\"name\":\"Resolve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"escAddr\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"cardAddr\",\"type\":\"address\"}],\"name\":\"SetAddrs\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"SetSecretary\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"mySlot\",\"type\":\"uint64\"},{\"internalType\":\"uint64[]\",\"name\":\"otherSlots\",\"type\":\"uint64[]\"}],\"name\":\"SettleCardReward\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64[]\",\"name\":\"slots\",\"type\":\"uint64[]\"}],\"name\":\"SettleOpsReward\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64[]\",\"name\":\"daySlots\",\"type\":\"uint64[]\"}],\"name\":\"SettleVoteReward\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"},{\"internalType\":\"string[]\",\"name\":\"candidates\",\"type\":\"string[]\"}],\"name\":\"SubmitCandidates\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"},{\"internalType\":\"uint8\",\"name\":\"storyIdx\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"newStory\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"reason\",\"type\":\"string\"}],\"name\":\"SubmitErrata\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"daySlot\",\"type\":\"uint64\"},{\"internalType\":\"uint8[3]\",\"name\":\"prefers\",\"type\":\"uint8[3]\"}],\"name\":\"Vote\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"VoteInfoMap\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"Status\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"VoteAmt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"Reward\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"paused\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"proxiableUUID\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"secretary\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"unpause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newImplementation\",\"type\":\"address\"}],\"name\":\"upgradeTo\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newImplementation\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"upgradeToAndCall\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}]",
 }
 
 // HistoryABI is the input ABI used to generate the binding from.
@@ -377,6 +377,97 @@ func (_History *HistoryCallerSession) GetBigStories(daySlot uint64) (struct {
 	Content [3]string
 }, error) {
 	return _History.Contract.GetBigStories(&_History.CallOpts, daySlot)
+}
+
+// GetErrataAt is a free data retrieval call binding the contract method 0x57e07389.
+//
+// Solidity: function GetErrataAt(uint256 idx) view returns(uint64 daySlot, uint64 updateBlk, uint8 storyIdx, string oldStory, string reason)
+func (_History *HistoryCaller) GetErrataAt(opts *bind.CallOpts, idx *big.Int) (struct {
+	DaySlot   uint64
+	UpdateBlk uint64
+	StoryIdx  uint8
+	OldStory  string
+	Reason    string
+}, error) {
+	var out []interface{}
+	err := _History.contract.Call(opts, &out, "GetErrataAt", idx)
+
+	outstruct := new(struct {
+		DaySlot   uint64
+		UpdateBlk uint64
+		StoryIdx  uint8
+		OldStory  string
+		Reason    string
+	})
+	if err != nil {
+		return *outstruct, err
+	}
+
+	outstruct.DaySlot = *abi.ConvertType(out[0], new(uint64)).(*uint64)
+	outstruct.UpdateBlk = *abi.ConvertType(out[1], new(uint64)).(*uint64)
+	outstruct.StoryIdx = *abi.ConvertType(out[2], new(uint8)).(*uint8)
+	outstruct.OldStory = *abi.ConvertType(out[3], new(string)).(*string)
+	outstruct.Reason = *abi.ConvertType(out[4], new(string)).(*string)
+
+	return *outstruct, err
+
+}
+
+// GetErrataAt is a free data retrieval call binding the contract method 0x57e07389.
+//
+// Solidity: function GetErrataAt(uint256 idx) view returns(uint64 daySlot, uint64 updateBlk, uint8 storyIdx, string oldStory, string reason)
+func (_History *HistorySession) GetErrataAt(idx *big.Int) (struct {
+	DaySlot   uint64
+	UpdateBlk uint64
+	StoryIdx  uint8
+	OldStory  string
+	Reason    string
+}, error) {
+	return _History.Contract.GetErrataAt(&_History.CallOpts, idx)
+}
+
+// GetErrataAt is a free data retrieval call binding the contract method 0x57e07389.
+//
+// Solidity: function GetErrataAt(uint256 idx) view returns(uint64 daySlot, uint64 updateBlk, uint8 storyIdx, string oldStory, string reason)
+func (_History *HistoryCallerSession) GetErrataAt(idx *big.Int) (struct {
+	DaySlot   uint64
+	UpdateBlk uint64
+	StoryIdx  uint8
+	OldStory  string
+	Reason    string
+}, error) {
+	return _History.Contract.GetErrataAt(&_History.CallOpts, idx)
+}
+
+// GetErrataLength is a free data retrieval call binding the contract method 0xfe21f1f0.
+//
+// Solidity: function GetErrataLength() view returns(uint256 cnt)
+func (_History *HistoryCaller) GetErrataLength(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _History.contract.Call(opts, &out, "GetErrataLength")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// GetErrataLength is a free data retrieval call binding the contract method 0xfe21f1f0.
+//
+// Solidity: function GetErrataLength() view returns(uint256 cnt)
+func (_History *HistorySession) GetErrataLength() (*big.Int, error) {
+	return _History.Contract.GetErrataLength(&_History.CallOpts)
+}
+
+// GetErrataLength is a free data retrieval call binding the contract method 0xfe21f1f0.
+//
+// Solidity: function GetErrataLength() view returns(uint256 cnt)
+func (_History *HistoryCallerSession) GetErrataLength() (*big.Int, error) {
+	return _History.Contract.GetErrataLength(&_History.CallOpts)
 }
 
 // GetHisRecBigIdxs is a free data retrieval call binding the contract method 0xe28555da.
@@ -830,6 +921,99 @@ func (_History *HistoryCallerSession) PendingRewardsMap(arg0 common.Address) (*b
 	return _History.Contract.PendingRewardsMap(&_History.CallOpts, arg0)
 }
 
+// PreviewCardReward is a free data retrieval call binding the contract method 0x7d7ab844.
+//
+// Solidity: function PreviewCardReward(uint64 mySlot, uint64 otherSlot) view returns(uint256 resReward)
+func (_History *HistoryCaller) PreviewCardReward(opts *bind.CallOpts, mySlot uint64, otherSlot uint64) (*big.Int, error) {
+	var out []interface{}
+	err := _History.contract.Call(opts, &out, "PreviewCardReward", mySlot, otherSlot)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// PreviewCardReward is a free data retrieval call binding the contract method 0x7d7ab844.
+//
+// Solidity: function PreviewCardReward(uint64 mySlot, uint64 otherSlot) view returns(uint256 resReward)
+func (_History *HistorySession) PreviewCardReward(mySlot uint64, otherSlot uint64) (*big.Int, error) {
+	return _History.Contract.PreviewCardReward(&_History.CallOpts, mySlot, otherSlot)
+}
+
+// PreviewCardReward is a free data retrieval call binding the contract method 0x7d7ab844.
+//
+// Solidity: function PreviewCardReward(uint64 mySlot, uint64 otherSlot) view returns(uint256 resReward)
+func (_History *HistoryCallerSession) PreviewCardReward(mySlot uint64, otherSlot uint64) (*big.Int, error) {
+	return _History.Contract.PreviewCardReward(&_History.CallOpts, mySlot, otherSlot)
+}
+
+// PreviewOpsReward is a free data retrieval call binding the contract method 0x0a7f17f9.
+//
+// Solidity: function PreviewOpsReward(uint64 slot) view returns(uint256 resReward)
+func (_History *HistoryCaller) PreviewOpsReward(opts *bind.CallOpts, slot uint64) (*big.Int, error) {
+	var out []interface{}
+	err := _History.contract.Call(opts, &out, "PreviewOpsReward", slot)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// PreviewOpsReward is a free data retrieval call binding the contract method 0x0a7f17f9.
+//
+// Solidity: function PreviewOpsReward(uint64 slot) view returns(uint256 resReward)
+func (_History *HistorySession) PreviewOpsReward(slot uint64) (*big.Int, error) {
+	return _History.Contract.PreviewOpsReward(&_History.CallOpts, slot)
+}
+
+// PreviewOpsReward is a free data retrieval call binding the contract method 0x0a7f17f9.
+//
+// Solidity: function PreviewOpsReward(uint64 slot) view returns(uint256 resReward)
+func (_History *HistoryCallerSession) PreviewOpsReward(slot uint64) (*big.Int, error) {
+	return _History.Contract.PreviewOpsReward(&_History.CallOpts, slot)
+}
+
+// PreviewVoteReward is a free data retrieval call binding the contract method 0xce415933.
+//
+// Solidity: function PreviewVoteReward(uint64 slot, address addr) view returns(uint256 resRewards)
+func (_History *HistoryCaller) PreviewVoteReward(opts *bind.CallOpts, slot uint64, addr common.Address) (*big.Int, error) {
+	var out []interface{}
+	err := _History.contract.Call(opts, &out, "PreviewVoteReward", slot, addr)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// PreviewVoteReward is a free data retrieval call binding the contract method 0xce415933.
+//
+// Solidity: function PreviewVoteReward(uint64 slot, address addr) view returns(uint256 resRewards)
+func (_History *HistorySession) PreviewVoteReward(slot uint64, addr common.Address) (*big.Int, error) {
+	return _History.Contract.PreviewVoteReward(&_History.CallOpts, slot, addr)
+}
+
+// PreviewVoteReward is a free data retrieval call binding the contract method 0xce415933.
+//
+// Solidity: function PreviewVoteReward(uint64 slot, address addr) view returns(uint256 resRewards)
+func (_History *HistoryCallerSession) PreviewVoteReward(slot uint64, addr common.Address) (*big.Int, error) {
+	return _History.Contract.PreviewVoteReward(&_History.CallOpts, slot, addr)
+}
+
 // QueryCurPrice is a free data retrieval call binding the contract method 0x0c0000bd.
 //
 // Solidity: function QueryCurPrice(uint64 tokenId) view returns(uint8 hisStatus, uint256 curPrice)
@@ -1257,6 +1441,27 @@ func (_History *HistorySession) SubmitCandidates(daySlot uint64, candidates []st
 // Solidity: function SubmitCandidates(uint64 daySlot, string[] candidates) returns()
 func (_History *HistoryTransactorSession) SubmitCandidates(daySlot uint64, candidates []string) (*types.Transaction, error) {
 	return _History.Contract.SubmitCandidates(&_History.TransactOpts, daySlot, candidates)
+}
+
+// SubmitErrata is a paid mutator transaction binding the contract method 0xde707f99.
+//
+// Solidity: function SubmitErrata(uint64 daySlot, uint8 storyIdx, string newStory, string reason) returns()
+func (_History *HistoryTransactor) SubmitErrata(opts *bind.TransactOpts, daySlot uint64, storyIdx uint8, newStory string, reason string) (*types.Transaction, error) {
+	return _History.contract.Transact(opts, "SubmitErrata", daySlot, storyIdx, newStory, reason)
+}
+
+// SubmitErrata is a paid mutator transaction binding the contract method 0xde707f99.
+//
+// Solidity: function SubmitErrata(uint64 daySlot, uint8 storyIdx, string newStory, string reason) returns()
+func (_History *HistorySession) SubmitErrata(daySlot uint64, storyIdx uint8, newStory string, reason string) (*types.Transaction, error) {
+	return _History.Contract.SubmitErrata(&_History.TransactOpts, daySlot, storyIdx, newStory, reason)
+}
+
+// SubmitErrata is a paid mutator transaction binding the contract method 0xde707f99.
+//
+// Solidity: function SubmitErrata(uint64 daySlot, uint8 storyIdx, string newStory, string reason) returns()
+func (_History *HistoryTransactorSession) SubmitErrata(daySlot uint64, storyIdx uint8, newStory string, reason string) (*types.Transaction, error) {
+	return _History.Contract.SubmitErrata(&_History.TransactOpts, daySlot, storyIdx, newStory, reason)
 }
 
 // Vote is a paid mutator transaction binding the contract method 0x1ea2d084.
@@ -1706,6 +1911,275 @@ func (_History *HistoryFilterer) ParseBeaconUpgraded(log types.Log) (*HistoryBea
 	return event, nil
 }
 
+// HistoryCardRewardUpdatedIterator is returned from FilterCardRewardUpdated and is used to iterate over the raw logs and unpacked data for CardRewardUpdated events raised by the History contract.
+type HistoryCardRewardUpdatedIterator struct {
+	Event *HistoryCardRewardUpdated // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *HistoryCardRewardUpdatedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(HistoryCardRewardUpdated)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(HistoryCardRewardUpdated)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *HistoryCardRewardUpdatedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *HistoryCardRewardUpdatedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// HistoryCardRewardUpdated represents a CardRewardUpdated event raised by the History contract.
+type HistoryCardRewardUpdated struct {
+	MySlot    uint64
+	OtherSlot uint64
+	Raw       types.Log // Blockchain specific contextual infos
+}
+
+// FilterCardRewardUpdated is a free log retrieval operation binding the contract event 0x10a2ea4a1fc0afa29093d935b8c2b5ef96769b3d52df7fc89474dfdc3a7e8460.
+//
+// Solidity: event CardRewardUpdated(uint64 mySlot, uint64 otherSlot)
+func (_History *HistoryFilterer) FilterCardRewardUpdated(opts *bind.FilterOpts) (*HistoryCardRewardUpdatedIterator, error) {
+
+	logs, sub, err := _History.contract.FilterLogs(opts, "CardRewardUpdated")
+	if err != nil {
+		return nil, err
+	}
+	return &HistoryCardRewardUpdatedIterator{contract: _History.contract, event: "CardRewardUpdated", logs: logs, sub: sub}, nil
+}
+
+// WatchCardRewardUpdated is a free log subscription operation binding the contract event 0x10a2ea4a1fc0afa29093d935b8c2b5ef96769b3d52df7fc89474dfdc3a7e8460.
+//
+// Solidity: event CardRewardUpdated(uint64 mySlot, uint64 otherSlot)
+func (_History *HistoryFilterer) WatchCardRewardUpdated(opts *bind.WatchOpts, sink chan<- *HistoryCardRewardUpdated) (event.Subscription, error) {
+
+	logs, sub, err := _History.contract.WatchLogs(opts, "CardRewardUpdated")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(HistoryCardRewardUpdated)
+				if err := _History.contract.UnpackLog(event, "CardRewardUpdated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseCardRewardUpdated is a log parse operation binding the contract event 0x10a2ea4a1fc0afa29093d935b8c2b5ef96769b3d52df7fc89474dfdc3a7e8460.
+//
+// Solidity: event CardRewardUpdated(uint64 mySlot, uint64 otherSlot)
+func (_History *HistoryFilterer) ParseCardRewardUpdated(log types.Log) (*HistoryCardRewardUpdated, error) {
+	event := new(HistoryCardRewardUpdated)
+	if err := _History.contract.UnpackLog(event, "CardRewardUpdated", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// HistoryHisRecordUpdatedIterator is returned from FilterHisRecordUpdated and is used to iterate over the raw logs and unpacked data for HisRecordUpdated events raised by the History contract.
+type HistoryHisRecordUpdatedIterator struct {
+	Event *HistoryHisRecordUpdated // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *HistoryHisRecordUpdatedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(HistoryHisRecordUpdated)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(HistoryHisRecordUpdated)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *HistoryHisRecordUpdatedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *HistoryHisRecordUpdatedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// HistoryHisRecordUpdated represents a HisRecordUpdated event raised by the History contract.
+type HistoryHisRecordUpdated struct {
+	Slot uint64
+	Raw  types.Log // Blockchain specific contextual infos
+}
+
+// FilterHisRecordUpdated is a free log retrieval operation binding the contract event 0x9369fdcdf67069a9d15154dd81584fc991e895bda2f5ce24430c1073ae63dda8.
+//
+// Solidity: event HisRecordUpdated(uint64 slot)
+func (_History *HistoryFilterer) FilterHisRecordUpdated(opts *bind.FilterOpts) (*HistoryHisRecordUpdatedIterator, error) {
+
+	logs, sub, err := _History.contract.FilterLogs(opts, "HisRecordUpdated")
+	if err != nil {
+		return nil, err
+	}
+	return &HistoryHisRecordUpdatedIterator{contract: _History.contract, event: "HisRecordUpdated", logs: logs, sub: sub}, nil
+}
+
+// WatchHisRecordUpdated is a free log subscription operation binding the contract event 0x9369fdcdf67069a9d15154dd81584fc991e895bda2f5ce24430c1073ae63dda8.
+//
+// Solidity: event HisRecordUpdated(uint64 slot)
+func (_History *HistoryFilterer) WatchHisRecordUpdated(opts *bind.WatchOpts, sink chan<- *HistoryHisRecordUpdated) (event.Subscription, error) {
+
+	logs, sub, err := _History.contract.WatchLogs(opts, "HisRecordUpdated")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(HistoryHisRecordUpdated)
+				if err := _History.contract.UnpackLog(event, "HisRecordUpdated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseHisRecordUpdated is a log parse operation binding the contract event 0x9369fdcdf67069a9d15154dd81584fc991e895bda2f5ce24430c1073ae63dda8.
+//
+// Solidity: event HisRecordUpdated(uint64 slot)
+func (_History *HistoryFilterer) ParseHisRecordUpdated(log types.Log) (*HistoryHisRecordUpdated, error) {
+	event := new(HistoryHisRecordUpdated)
+	if err := _History.contract.UnpackLog(event, "HisRecordUpdated", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
 // HistoryInitializedIterator is returned from FilterInitialized and is used to iterate over the raw logs and unpacked data for Initialized events raised by the History contract.
 type HistoryInitializedIterator struct {
 	Event *HistoryInitialized // Event containing the contract specifics and raw log
@@ -1840,9 +2314,9 @@ func (_History *HistoryFilterer) ParseInitialized(log types.Log) (*HistoryInitia
 	return event, nil
 }
 
-// HistoryNewCardIterator is returned from FilterNewCard and is used to iterate over the raw logs and unpacked data for NewCard events raised by the History contract.
-type HistoryNewCardIterator struct {
-	Event *HistoryNewCard // Event containing the contract specifics and raw log
+// HistoryNewErrataIterator is returned from FilterNewErrata and is used to iterate over the raw logs and unpacked data for NewErrata events raised by the History contract.
+type HistoryNewErrataIterator struct {
+	Event *HistoryNewErrata // Event containing the contract specifics and raw log
 
 	contract *bind.BoundContract // Generic contract to use for unpacking event data
 	event    string              // Event name to use for unpacking event data
@@ -1856,7 +2330,7 @@ type HistoryNewCardIterator struct {
 // Next advances the iterator to the subsequent event, returning whether there
 // are any more events found. In case of a retrieval or parsing error, false is
 // returned and Error() can be queried for the exact failure.
-func (it *HistoryNewCardIterator) Next() bool {
+func (it *HistoryNewErrataIterator) Next() bool {
 	// If the iterator failed, stop iterating
 	if it.fail != nil {
 		return false
@@ -1865,7 +2339,7 @@ func (it *HistoryNewCardIterator) Next() bool {
 	if it.done {
 		select {
 		case log := <-it.logs:
-			it.Event = new(HistoryNewCard)
+			it.Event = new(HistoryNewErrata)
 			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 				it.fail = err
 				return false
@@ -1880,7 +2354,7 @@ func (it *HistoryNewCardIterator) Next() bool {
 	// Iterator still in progress, wait for either a data or an error event
 	select {
 	case log := <-it.logs:
-		it.Event = new(HistoryNewCard)
+		it.Event = new(HistoryNewErrata)
 		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 			it.fail = err
 			return false
@@ -1896,41 +2370,42 @@ func (it *HistoryNewCardIterator) Next() bool {
 }
 
 // Error returns any retrieval or parsing error occurred during filtering.
-func (it *HistoryNewCardIterator) Error() error {
+func (it *HistoryNewErrataIterator) Error() error {
 	return it.fail
 }
 
 // Close terminates the iteration process, releasing any pending underlying
 // resources.
-func (it *HistoryNewCardIterator) Close() error {
+func (it *HistoryNewErrataIterator) Close() error {
 	it.sub.Unsubscribe()
 	return nil
 }
 
-// HistoryNewCard represents a NewCard event raised by the History contract.
-type HistoryNewCard struct {
+// HistoryNewErrata represents a NewErrata event raised by the History contract.
+type HistoryNewErrata struct {
 	DaySlot uint64
+	Idx     uint8
 	Raw     types.Log // Blockchain specific contextual infos
 }
 
-// FilterNewCard is a free log retrieval operation binding the contract event 0xe1b8fb0326a90ea1dc6b90625c26b9e0e9f172bc0cd1c2d6d2900d4e5707979c.
+// FilterNewErrata is a free log retrieval operation binding the contract event 0x88297a2c074804509b02103f1dc7e4f7dd37678423a55626e3d1ccc7729927c6.
 //
-// Solidity: event NewCard(uint64 daySlot)
-func (_History *HistoryFilterer) FilterNewCard(opts *bind.FilterOpts) (*HistoryNewCardIterator, error) {
+// Solidity: event NewErrata(uint64 daySlot, uint8 idx)
+func (_History *HistoryFilterer) FilterNewErrata(opts *bind.FilterOpts) (*HistoryNewErrataIterator, error) {
 
-	logs, sub, err := _History.contract.FilterLogs(opts, "NewCard")
+	logs, sub, err := _History.contract.FilterLogs(opts, "NewErrata")
 	if err != nil {
 		return nil, err
 	}
-	return &HistoryNewCardIterator{contract: _History.contract, event: "NewCard", logs: logs, sub: sub}, nil
+	return &HistoryNewErrataIterator{contract: _History.contract, event: "NewErrata", logs: logs, sub: sub}, nil
 }
 
-// WatchNewCard is a free log subscription operation binding the contract event 0xe1b8fb0326a90ea1dc6b90625c26b9e0e9f172bc0cd1c2d6d2900d4e5707979c.
+// WatchNewErrata is a free log subscription operation binding the contract event 0x88297a2c074804509b02103f1dc7e4f7dd37678423a55626e3d1ccc7729927c6.
 //
-// Solidity: event NewCard(uint64 daySlot)
-func (_History *HistoryFilterer) WatchNewCard(opts *bind.WatchOpts, sink chan<- *HistoryNewCard) (event.Subscription, error) {
+// Solidity: event NewErrata(uint64 daySlot, uint8 idx)
+func (_History *HistoryFilterer) WatchNewErrata(opts *bind.WatchOpts, sink chan<- *HistoryNewErrata) (event.Subscription, error) {
 
-	logs, sub, err := _History.contract.WatchLogs(opts, "NewCard")
+	logs, sub, err := _History.contract.WatchLogs(opts, "NewErrata")
 	if err != nil {
 		return nil, err
 	}
@@ -1940,8 +2415,8 @@ func (_History *HistoryFilterer) WatchNewCard(opts *bind.WatchOpts, sink chan<- 
 			select {
 			case log := <-logs:
 				// New log arrived, parse the event and forward to the user
-				event := new(HistoryNewCard)
-				if err := _History.contract.UnpackLog(event, "NewCard", log); err != nil {
+				event := new(HistoryNewErrata)
+				if err := _History.contract.UnpackLog(event, "NewErrata", log); err != nil {
 					return err
 				}
 				event.Raw = log
@@ -1962,12 +2437,12 @@ func (_History *HistoryFilterer) WatchNewCard(opts *bind.WatchOpts, sink chan<- 
 	}), nil
 }
 
-// ParseNewCard is a log parse operation binding the contract event 0xe1b8fb0326a90ea1dc6b90625c26b9e0e9f172bc0cd1c2d6d2900d4e5707979c.
+// ParseNewErrata is a log parse operation binding the contract event 0x88297a2c074804509b02103f1dc7e4f7dd37678423a55626e3d1ccc7729927c6.
 //
-// Solidity: event NewCard(uint64 daySlot)
-func (_History *HistoryFilterer) ParseNewCard(log types.Log) (*HistoryNewCard, error) {
-	event := new(HistoryNewCard)
-	if err := _History.contract.UnpackLog(event, "NewCard", log); err != nil {
+// Solidity: event NewErrata(uint64 daySlot, uint8 idx)
+func (_History *HistoryFilterer) ParseNewErrata(log types.Log) (*HistoryNewErrata, error) {
+	event := new(HistoryNewErrata)
+	if err := _History.contract.UnpackLog(event, "NewErrata", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
@@ -2533,6 +3008,141 @@ func (_History *HistoryFilterer) WatchUpgraded(opts *bind.WatchOpts, sink chan<-
 func (_History *HistoryFilterer) ParseUpgraded(log types.Log) (*HistoryUpgraded, error) {
 	event := new(HistoryUpgraded)
 	if err := _History.contract.UnpackLog(event, "Upgraded", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// HistoryVoteInfoUpdatedIterator is returned from FilterVoteInfoUpdated and is used to iterate over the raw logs and unpacked data for VoteInfoUpdated events raised by the History contract.
+type HistoryVoteInfoUpdatedIterator struct {
+	Event *HistoryVoteInfoUpdated // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *HistoryVoteInfoUpdatedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(HistoryVoteInfoUpdated)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(HistoryVoteInfoUpdated)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *HistoryVoteInfoUpdatedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *HistoryVoteInfoUpdatedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// HistoryVoteInfoUpdated represents a VoteInfoUpdated event raised by the History contract.
+type HistoryVoteInfoUpdated struct {
+	Addr    common.Address
+	DaySlot uint64
+	Raw     types.Log // Blockchain specific contextual infos
+}
+
+// FilterVoteInfoUpdated is a free log retrieval operation binding the contract event 0xdcf6868cf8d709d7df7c76dc97b764e20d5436e74e60702261bd957fd47ab75a.
+//
+// Solidity: event VoteInfoUpdated(address addr, uint64 daySlot)
+func (_History *HistoryFilterer) FilterVoteInfoUpdated(opts *bind.FilterOpts) (*HistoryVoteInfoUpdatedIterator, error) {
+
+	logs, sub, err := _History.contract.FilterLogs(opts, "VoteInfoUpdated")
+	if err != nil {
+		return nil, err
+	}
+	return &HistoryVoteInfoUpdatedIterator{contract: _History.contract, event: "VoteInfoUpdated", logs: logs, sub: sub}, nil
+}
+
+// WatchVoteInfoUpdated is a free log subscription operation binding the contract event 0xdcf6868cf8d709d7df7c76dc97b764e20d5436e74e60702261bd957fd47ab75a.
+//
+// Solidity: event VoteInfoUpdated(address addr, uint64 daySlot)
+func (_History *HistoryFilterer) WatchVoteInfoUpdated(opts *bind.WatchOpts, sink chan<- *HistoryVoteInfoUpdated) (event.Subscription, error) {
+
+	logs, sub, err := _History.contract.WatchLogs(opts, "VoteInfoUpdated")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(HistoryVoteInfoUpdated)
+				if err := _History.contract.UnpackLog(event, "VoteInfoUpdated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseVoteInfoUpdated is a log parse operation binding the contract event 0xdcf6868cf8d709d7df7c76dc97b764e20d5436e74e60702261bd957fd47ab75a.
+//
+// Solidity: event VoteInfoUpdated(address addr, uint64 daySlot)
+func (_History *HistoryFilterer) ParseVoteInfoUpdated(log types.Log) (*HistoryVoteInfoUpdated, error) {
+	event := new(HistoryVoteInfoUpdated)
+	if err := _History.contract.UnpackLog(event, "VoteInfoUpdated", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
